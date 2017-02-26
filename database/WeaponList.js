@@ -4242,6 +4242,1258 @@ module.exports = {
         }
     ],
 
+    "r13": [
+        {
+            _id: "3001092", modelId: "13", name: "Segment Weapon", commonNames: ["Segment Weapon"],
+            classId: 1, type: "story", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 95, pdef: 78, matk: 0, mdef: 100, crit: 12, hit: 25, eva: 0,
+                    frontSkill: "V Slash", backSkill: "Slash"
+                },
+                "+1": { price: 6000,
+                    patk: 130, pdef: 103, matk: 0, mdef: 135, crit: 12, hit: 25, eva: 0,
+                    frontSkill: "V Slash", backSkill: "Slash"
+                },
+                "+2": { price: 7000,
+                    patk: 175, pdef: 125, matk: 0, mdef: 175, crit: 12, hit: 25, eva: 0,
+                    frontSkill: "Flame V Slash", backSkill: "V Slash"
+                },
+                "+3": { price: 8000,
+                    patk: 225, pdef: 160, matk: 0, mdef: 195, crit: 12, hit: 25, eva: 0,
+                    frontSkill: "Flame V Slash", backSkill: "V Slash"
+                }
+            },
+            note: "", devCost: 45000, levelRequired: 69, tier: 2, recipe: [
+                {
+                    materialName: "Mithril Ore",
+                    amount: 3
+                },{
+                    materialName: "Opal",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3002092", modelId: "13", name: "Hijinzettou", commonNames: ["Hijinzettou"],
+            classId: 2, type: "story", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 165, pdef: 0, matk: 0, mdef: 0, crit: 37, hit: 37, eva: 0,
+                    frontSkill: "Helmet Splitter", backSkill: "Slash"
+                },
+                "+1": { price: 6000,
+                    patk: 208, pdef: 0, matk: 0, mdef: 0, crit: 37, hit: 37, eva: 0,
+                    frontSkill: "Helmet Splitter", backSkill: "Slash"
+                },
+                "+2": { price: 7000,
+                    patk: 260, pdef: 0, matk: 0, mdef: 0, crit: 37, hit: 37, eva: 0,
+                    frontSkill: "Flame Slash", backSkill: "Cleave"
+                },
+                "+3": { price: 8000,
+                    patk: 320, pdef: 0, matk: 0, mdef: 0, crit: 37, hit: 37, eva: 0,
+                    frontSkill: "Flame Slash", backSkill: "Cleave"
+                }
+            },
+            note: "", devCost: 45000, levelRequired: 66, tier: 2, recipe: [
+                {
+                    materialName: "Opal",
+                    amount: 2
+                },{
+                    materialName: "Holy Water",
+                    amount: 3
+                }
+            ]
+        },{
+            _id: "3003092", modelId: "13", name: "Segment Bow", commonNames: ["Segment Bow"],
+            classId: 3, type: "story", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 134, pdef: 0, matk: 0, mdef: 0, crit: 7, hit: 46, eva: 0,
+                    frontSkill: "Chain Shot", backSkill: "Heavy Shot"
+                },
+                "+1": { price: 6000,
+                    patk: 175, pdef: 0, matk: 0, mdef: 0, crit: 7, hit: 46, eva: 0,
+                    frontSkill: "Chain Shot", backSkill: "Heavy Shot"
+                },
+                "+2": { price: 7000,
+                    patk: 225, pdef: 0, matk: 0, mdef: 0, crit: 7, hit: 46, eva: 0,
+                    frontSkill: "Chain Shot", backSkill: "Flame Shot"
+                },
+                "+3": { price: 8000,
+                    patk: 290, pdef: 0, matk: 0, mdef: 0, crit: 7, hit: 46, eva: 0,
+                    frontSkill: "Chain Shot", backSkill: "Flame Shot"
+                }
+            },
+            note: "", devCost: 45000, levelRequired: 69, tier: 2, recipe: [
+                {
+                    materialName: "Holy Cloth",
+                    amount: 3
+                },{
+                    materialName: "Malachite",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3004092", modelId: "13", name: "Segment Javelin", commonNames: ["Segment Javelin"],
+            classId: 4, type: "story", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 42, pdef: 110, matk: 0, mdef: 0, crit: 5, hit: 25, eva: 0,
+                    frontSkill: "Full-On Collision", backSkill: "Spear Jab"
+                },
+                "+1": { price: 6000,
+                    patk: 46, pdef: 150, matk: 0, mdef: 0, crit: 10, hit: 25, eva: 0,
+                    frontSkill: "Full-On Collision", backSkill: "Spear Jab"
+                },
+                "+2": { price: 7000,
+                    patk: 70, pdef: 200, matk: 0, mdef: 0, crit: 20, hit: 25, eva: 0,
+                    frontSkill: "Flame Piercing Collision", backSkill: "Double Strike"
+                },
+                "+3": { price: 8000,
+                    patk: 93, pdef: 265, matk: 0, mdef: 0, crit: 30, hit: 25, eva: 0,
+                    frontSkill: "Flame Piercing Collision", backSkill: "Double Strike"
+                }
+            },
+            note: "", devCost: 45000, levelRequired: 70, tier: 2, recipe: [
+                {
+                    materialName: "Mithril Ore",
+                    amount: 3
+                },{
+                    materialName: "Opal",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3005092", modelId: "13", name: "Segment Hammer", commonNames: ["Segment Hammer"],
+            classId: 5, type: "story", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 220, pdef: 0, matk: 0, mdef: 0, crit: 35, hit: 25, eva: 0,
+                    frontSkill: "Hammerfall", backSkill: "Crash"
+                },
+                "+1": { price: 6000,
+                    patk: 295, pdef: 0, matk: 0, mdef: 0, crit: 35, hit: 25, eva: 0,
+                    frontSkill: "Hammerfall", backSkill: "Crash"
+                },
+                "+2": { price: 7000,
+                    patk: 380, pdef: 0, matk: 0, mdef: 0, crit: 35, hit: 25, eva: 0,
+                    frontSkill: "Flamefall", backSkill: "Swing"
+                },
+                "+3": { price: 8000,
+                    patk: 480, pdef: 0, matk: 0, mdef: 0, crit: 35, hit: 25, eva: 0,
+                    frontSkill: "Flamefall", backSkill: "Swing"
+                }
+            },
+            note: "", devCost: 45000, levelRequired: 67, tier: 2, recipe: [
+                {
+                    materialName: "Opal",
+                    amount: 2
+                },{
+                    materialName: "Dragon Horn",
+                    amount: 3
+                }
+            ]
+        },{
+            _id: "3006092", modelId: "13", name: "Segment Cross", commonNames: ["Segment Cross"],
+            classId: 6, type: "story", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 0, pdef: 33, matk: 120, mdef: 50, crit: 0, hit: 10, eva: 0,
+                    frontSkill: "Knock", backSkill: "Deep Fold"
+                },
+                "+1": { price: 6000,
+                    patk: 0, pdef: 48, matk: 160, mdef: 65, crit: 0, hit: 10, eva: 0,
+                    frontSkill: "Knock", backSkill: "Deep Fold"
+                },
+                "+2": { price: 7000,
+                    patk: 0, pdef: 55, matk: 200, mdef: 75, crit: 0, hit: 10, eva: 0,
+                    frontSkill: "Knock", backSkill: "Deep Fold"
+                },
+                "+3": { price: 8000,
+                    patk: 0, pdef: 95, matk: 285, mdef: 95, crit: 0, hit: 10, eva: 0,
+                    frontSkill: "Knock", backSkill: "Deep Fold"
+                }
+            },
+            note: "", devCost: 45000, levelRequired: 67, tier: 2, recipe: [
+                {
+                    materialName: "Malachite",
+                    amount: 2
+                },{
+                    materialName: "Sun Fragment",
+                    amount: 3
+                }
+            ]
+        },{
+            _id: "3007092", modelId: "13", name: "Double Segment", commonNames: ["Double Segment"],
+            classId: 7, type: "story", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 105, pdef: 0, matk: 0, mdef: 0, crit: 15, hit: 33, eva: 55,
+                    frontSkill: "Twin Attack", backSkill: "Throwing Knife"
+                },
+                "+1": { price: 6000,
+                    patk: 138, pdef: 0, matk: 0, mdef: 0, crit: 15, hit: 38, eva: 55,
+                    frontSkill: "Twin Attack", backSkill: "Throwing Knife"
+                },
+                "+2": { price: 7000,
+                    patk: 150, pdef: 0, matk: 0, mdef: 0, crit: 15, hit: 43, eva: 55,
+                    frontSkill: "Flame Dance Formation", backSkill: "Shadow Snake Punch"
+                },
+                "+3": { price: 8000,
+                    patk: 234, pdef: 0, matk: 0, mdef: 0, crit: 15, hit: 55, eva: 55,
+                    frontSkill: "Flame Dance Formation", backSkill: "Shadow Snake Punch"
+                }
+            },
+            note: "", devCost: 45000, levelRequired: 68, tier: 2, recipe: [
+                {
+                    materialName: "Rare Species Leather",
+                    amount: 3
+                },{
+                    materialName: "Opal",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3008095", modelId: "13", name: "Secret Rod \"Segmentium\"", commonNames: ["Secret Rod \"Segmentium\""],
+            classId: 8, type: "story", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 0, pdef: 0, matk: 135, mdef: 0, crit: 15, hit: 0, eva: 10,
+                    frontSkill: "Fire Ball", backSkill: "Flare Ball"
+                },
+                "+1": { price: 6000,
+                    patk: 0, pdef: 0, matk: 196, mdef: 0, crit: 15, hit: 0, eva: 10,
+                    frontSkill: "Fire Ball", backSkill: "Flare Ball"
+                },
+                "+2": { price: 7000,
+                    patk: 0, pdef: 0, matk: 250, mdef: 0, crit: 15, hit: 0, eva: 10,
+                    frontSkill: "Flare Ball", backSkill: "Flare Ball"
+                },
+                "+3": { price: 8000,
+                    patk: 0, pdef: 0, matk: 330, mdef: 0, crit: 15, hit: 0, eva: 10,
+                    frontSkill: "Flare Ball", backSkill: "Flare Ball"
+                }
+            },
+            note: "", devCost: 45000, levelRequired: 68, tier: 2, recipe: [
+                {
+                    materialName: "Yggdrasil Branch",
+                    amount: 3
+                },{
+                    materialName: "Malachite",
+                    amount: 2
+                }
+            ]
+        }
+    ],
+
+    "r14": [
+        {
+            _id: "3001093", modelId: "14", name: "Sword of Raven", commonNames: ["Sword of Raven"],
+            classId: 1, type: "story", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 105, pdef: 88, matk: 0, mdef: 110, crit: 12, hit: 35, eva: 0,
+                    frontSkill: "V Slash", backSkill: "Slash"
+                },
+                "+1": { price: 6000,
+                    patk: 140, pdef: 113, matk: 0, mdef: 145, crit: 12, hit: 35, eva: 0,
+                    frontSkill: "V Slash", backSkill: "Slash"
+                },
+                "+2": { price: 7000,
+                    patk: 185, pdef: 135, matk: 0, mdef: 185, crit: 12, hit: 35, eva: 0,
+                    frontSkill: "Frost Edge", backSkill: "V Slash"
+                },
+                "+3": { price: 8000,
+                    patk: 235, pdef: 170, matk: 0, mdef: 205, crit: 12, hit: 35, eva: 0,
+                    frontSkill: "Frost Edge", backSkill: "V Slash"
+                }
+            },
+            note: "", devCost: 50000, levelRequired: 71, tier: 2, recipe: [
+                {
+                    materialName: "Demon Ore",
+                    amount: 3
+                },{
+                    materialName: "Opal",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3002093", modelId: "14", name: "Crow-eye Blade", commonNames: ["Crow-eye Blade"],
+            classId: 2, type: "story", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 175, pdef: 0, matk: 0, mdef: 0, crit: 47, hit: 37, eva: 0,
+                    frontSkill: "Helmet Splitter", backSkill: "Slash"
+                },
+                "+1": { price: 6000,
+                    patk: 218, pdef: 0, matk: 0, mdef: 0, crit: 47, hit: 37, eva: 0,
+                    frontSkill: "Helmet Splitter", backSkill: "Slash"
+                },
+                "+2": { price: 7000,
+                    patk: 260, pdef: 0, matk: 0, mdef: 0, crit: 47, hit: 37, eva: 0,
+                    frontSkill: "Ice Dancing Blade", backSkill: "Cleave"
+                },
+                "+3": { price: 8000,
+                    patk: 330, pdef: 0, matk: 0, mdef: 0, crit: 47, hit: 37, eva: 0,
+                    frontSkill: "Ice Dancing Blade", backSkill: "Cleave"
+                }
+            },
+            note: "", devCost: 50000, levelRequired: 71, tier: 2, recipe: [
+                {
+                    materialName: "Opal",
+                    amount: 2
+                },{
+                    materialName: "Demonic Violet Water",
+                    amount: 3
+                }
+            ]
+        },{
+            _id: "3003093", modelId: "14", name: "Black Raven", commonNames: ["Black Raven"],
+            classId: 3, type: "story", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 144, pdef: 0, matk: 0, mdef: 0, crit: 7, hit: 56, eva: 0,
+                    frontSkill: "Chain Shot", backSkill: "Heavy Shot"
+                },
+                "+1": { price: 6000,
+                    patk: 185, pdef: 0, matk: 0, mdef: 0, crit: 7, hit: 56, eva: 0,
+                    frontSkill: "Chain Shot", backSkill: "Heavy Shot"
+                },
+                "+2": { price: 7000,
+                    patk: 235, pdef: 0, matk: 0, mdef: 0, crit: 7, hit: 56, eva: 0,
+                    frontSkill: "Chain Shot", backSkill: "Ice Shot"
+                },
+                "+3": { price: 8000,
+                    patk: 300, pdef: 0, matk: 0, mdef: 0, crit: 7, hit: 56, eva: 0,
+                    frontSkill: "Chain Shot", backSkill: "Ice Shot"
+                }
+            },
+            note: "", devCost: 50000, levelRequired: 71, tier: 2, recipe: [
+                {
+                    materialName: "Demonic Cloth",
+                    amount: 3
+                },{
+                    materialName: "Malachite",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3004093", modelId: "14", name: "Raven Piercer", commonNames: ["Raven Piercer"],
+            classId: 4, type: "story", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 52, pdef: 120, matk: 0, mdef: 0, crit: 5, hit: 35, eva: 0,
+                    frontSkill: "Full-On Collision", backSkill: "Spear Jab"
+                },
+                "+1": { price: 6000,
+                    patk: 56, pdef: 160, matk: 0, mdef: 0, crit: 10, hit: 35, eva: 0,
+                    frontSkill: "Full-On Collision", backSkill: "Spear Jab"
+                },
+                "+2": { price: 7000,
+                    patk: 80, pdef: 210, matk: 0, mdef: 0, crit: 20, hit: 35, eva: 0,
+                    frontSkill: "Ice Collision", backSkill: "Double Strike"
+                },
+                "+3": { price: 8000,
+                    patk: 103, pdef: 275, matk: 0, mdef: 0, crit: 30, hit: 35, eva: 0,
+                    frontSkill: "Ice Collision", backSkill: "Double Strike"
+                }
+            },
+            note: "", devCost: 50000, levelRequired: 71, tier: 2, recipe: [
+                {
+                    materialName: "Demon Ore",
+                    amount: 3
+                },{
+                    materialName: "Opal",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3005093", modelId: "14", name: "Raven Pounder", commonNames: ["Raven Pounder"],
+            classId: 5, type: "story", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 230, pdef: 0, matk: 0, mdef: 0, crit: 35, hit: 35, eva: 0,
+                    frontSkill: "Hammerfall", backSkill: "Crash"
+                },
+                "+1": { price: 6000,
+                    patk: 305, pdef: 0, matk: 0, mdef: 0, crit: 35, hit: 35, eva: 0,
+                    frontSkill: "Hammerfall", backSkill: "Crash"
+                },
+                "+2": { price: 7000,
+                    patk: 390, pdef: 0, matk: 0, mdef: 0, crit: 35, hit: 35, eva: 0,
+                    frontSkill: "Ice Age", backSkill: "Swing"
+                },
+                "+3": { price: 8000,
+                    patk: 490, pdef: 0, matk: 0, mdef: 0, crit: 35, hit: 35, eva: 0,
+                    frontSkill: "Ice Age", backSkill: "Swing"
+                }
+            },
+            note: "", devCost: 50000, levelRequired: 71, tier: 2, recipe: [
+                {
+                    materialName: "Opal",
+                    amount: 2
+                },{
+                    materialName: "Demon Beast Horn",
+                    amount: 3
+                }
+            ]
+        },{
+            _id: "3006093", modelId: "14", name: "Raven Cross", commonNames: ["Raven Cross"],
+            classId: 6, type: "story", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 0, pdef: 43, matk: 130, mdef: 60, crit: 0, hit: 20, eva: 0,
+                    frontSkill: "Knock", backSkill: "Deep Fold"
+                },
+                "+1": { price: 6000,
+                    patk: 0, pdef: 58, matk: 170, mdef: 75, crit: 0, hit: 20, eva: 0,
+                    frontSkill: "Knock", backSkill: "Deep Fold"
+                },
+                "+2": { price: 7000,
+                    patk: 0, pdef: 65, matk: 210, mdef: 85, crit: 0, hit: 20, eva: 0,
+                    frontSkill: "Knock", backSkill: "Deep Fold"
+                },
+                "+3": { price: 8000,
+                    patk: 0, pdef: 105, matk: 295, mdef: 105, crit: 0, hit: 20, eva: 0,
+                    frontSkill: "Knock", backSkill: "Deep Fold"
+                }
+            },
+            note: "", devCost: 50000, levelRequired: 71, tier: 2, recipe: [
+                {
+                    materialName: "Malachite",
+                    amount: 2
+                },{
+                    materialName: "Demon World Fragment",
+                    amount: 3
+                }
+            ]
+        },{
+            _id: "3007093", modelId: "14", name: "Symmetry Crow", commonNames: ["Symmetry Crow"],
+            classId: 7, type: "story", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 111, pdef: 0, matk: 0, mdef: 0, crit: 15, hit: 43, eva: 65,
+                    frontSkill: "Twin Attack", backSkill: "Throwing Knife"
+                },
+                "+1": { price: 6000,
+                    patk: 144, pdef: 0, matk: 0, mdef: 0, crit: 15, hit: 48, eva: 65,
+                    frontSkill: "Twin Attack", backSkill: "Throwing Knife"
+                },
+                "+2": { price: 7000,
+                    patk: 156, pdef: 0, matk: 0, mdef: 0, crit: 15, hit: 53, eva: 65,
+                    frontSkill: "Icy Wind", backSkill: "Shadow Snake Punch"
+                },
+                "+3": { price: 8000,
+                    patk: 240, pdef: 0, matk: 0, mdef: 0, crit: 15, hit: 65, eva: 65,
+                    frontSkill: "Icy Wind", backSkill: "Shadow Snake Punch"
+                }
+            },
+            note: "", devCost: 50000, levelRequired: 71, tier: 2, recipe: [
+                {
+                    materialName: "Demon Beast Leather",
+                    amount: 3
+                },{
+                    materialName: "Opal",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3008096", modelId: "14", name: "Crow Cane", commonNames: ["Crow Cane"],
+            classId: 8, type: "story", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 0, pdef: 0, matk: 145, mdef: 0, crit: 15, hit: 0, eva: 20,
+                    frontSkill: "Ice Strike", backSkill: "Ice Strike"
+                },
+                "+1": { price: 6000,
+                    patk: 0, pdef: 0, matk: 206, mdef: 0, crit: 15, hit: 0, eva: 20,
+                    frontSkill: "Ice Strike", backSkill: "Ice Strike"
+                },
+                "+2": { price: 7000,
+                    patk: 0, pdef: 0, matk: 260, mdef: 0, crit: 15, hit: 0, eva: 20,
+                    frontSkill: "Frostbite", backSkill: "Frostbite"
+                },
+                "+3": { price: 8000,
+                    patk: 0, pdef: 0, matk: 340, mdef: 0, crit: 15, hit: 0, eva: 20,
+                    frontSkill: "Frostbite", backSkill: "Frostbite"
+                }
+            },
+            note: "", devCost: 50000, levelRequired: 71, tier: 2, recipe: [
+                {
+                    materialName: "Demon Tree Branch",
+                    amount: 3
+                },{
+                    materialName: "Malachite",
+                    amount: 2
+                }
+            ]
+        }
+    ],
+
+    "valentine1": [
+        {
+            _id: "3001980", modelId: "98", name: "Valentine Sword", commonNames: ["Valentine Sword"],
+            classId: 1, type: "event", isActive: false, stats: {
+                "+0": { price: 1000,
+                    patk: 50, pdef: 50, matk: 0, mdef: 45, crit: 5, hit: 5, eva: 0,
+                    frontSkill: "Heart Slash", backSkill: "Slash"
+                },
+                "+1": { price: 1200,
+                    patk: 70, pdef: 70, matk: 0, mdef: 65, crit: 7, hit: 7, eva: 0,
+                    frontSkill: "Heart Slash", backSkill: "Slash"
+                },
+                "+2": { price: 1400,
+                    patk: 90, pdef: 90, matk: 0, mdef: 85, crit: 9, hit: 9, eva: 0,
+                    frontSkill: "Heart Slash", backSkill: "Slash"
+                },
+                "+3": { price: 1600,
+                    patk: 110, pdef: 110, matk: 0, mdef: 105, crit: 11, hit: 11, eva: 0,
+                    frontSkill: "Heart Slash", backSkill: "Slash"
+                },
+                "+4": { price: 2000,
+                    patk: 160, pdef: 160, matk: 0, mdef: 155, crit: 30, hit: 20, eva: 0,
+                    frontSkill: "Heart Slash", backSkill: "Slash"
+                }
+            },
+            note: "", devCost: 12000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Chocolate Bar",
+                    amount: 2
+                },{
+                    materialName: "Nuts",
+                    amount: 2
+                },{
+                    materialName: "Fruit",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3002980", modelId: "98", name: "Chokokoigatana", commonNames: ["Chokokoigatana"],
+            classId: 2, type: "event", isActive: false, stats: {
+                "+0": { price: 1000,
+                    patk: 111, pdef: 0, matk: 0, mdef: 0, crit: 20, hit: 5, eva: 0,
+                    frontSkill: "Illicit Love", backSkill: "Slash"
+                },
+                "+1": { price: 1200,
+                    patk: 133, pdef: 0, matk: 0, mdef: 0, crit: 23, hit: 5, eva: 0,
+                    frontSkill: "Illicit Love", backSkill: "Slash"
+                },
+                "+2": { price: 1400,
+                    patk: 155, pdef: 0, matk: 0, mdef: 0, crit: 26, hit: 5, eva: 0,
+                    frontSkill: "Illicit Love", backSkill: "Slash"
+                },
+                "+3": { price: 1600,
+                    patk: 177, pdef: 0, matk: 0, mdef: 0, crit: 29, hit: 5, eva: 33,
+                    frontSkill: "Illicit Love", backSkill: "Slash"
+                },
+                "+4": { price: 2000,
+                    patk: 277, pdef: 0, matk: 0, mdef: 0, crit: 35, hit: 5, eva: 0,
+                    frontSkill: "Illicit Love", backSkill: "Slash"
+                }
+            },
+            note: "", devCost: 12000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Chocolate Bar",
+                    amount: 2
+                },{
+                    materialName: "Nuts",
+                    amount: 2
+                },{
+                    materialName: "Fruit",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3003980", modelId: "98", name: "Love Syndrome", commonNames: ["Love Syndrome"],
+            classId: 3, type: "event", isActive: false, stats: {
+                "+0": { price: 1000,
+                    patk: 80, pdef: 0, matk: 0, mdef: 0, crit: 6, hit: 10, eva: 0,
+                    frontSkill: "Single Shot", backSkill: "Cupid's Arrow"
+                },
+                "+1": { price: 1200,
+                    patk: 90, pdef: 0, matk: 0, mdef: 0, crit: 7, hit: 20, eva: 0,
+                    frontSkill: "Single Shot", backSkill: "Cupid's Arrow"
+                },
+                "+2": { price: 1400,
+                    patk: 110, pdef: 0, matk: 0, mdef: 0, crit: 8, hit: 30, eva: 0,
+                    frontSkill: "Single Shot", backSkill: "Cupid's Arrow"
+                },
+                "+3": { price: 1600,
+                    patk: 140, pdef: 0, matk: 0, mdef: 0, crit: 9, hit: 40, eva: 0,
+                    frontSkill: "Single Shot", backSkill: "Cupid's Arrow"
+                },
+                "+4": { price: 2000,
+                    patk: 255, pdef: 0, matk: 0, mdef: 0, crit: 10, hit: 53, eva: 0,
+                    frontSkill: "Single Shot", backSkill: "Cupid's Arrow"
+                }
+            },
+            note: "", devCost: 12000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Chocolate Bar",
+                    amount: 2
+                },{
+                    materialName: "Nuts",
+                    amount: 2
+                },{
+                    materialName: "Fruit",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3004980", modelId: "98", name: "Gateau Umbrella", commonNames: ["Gateau Umbrella"],
+            classId: 4, type: "event", isActive: false, stats: {
+                "+0": { price: 1000,
+                    patk: 20, pdef: 40, matk: 0, mdef: 0, crit: 4, hit: 5, eva: 0,
+                    frontSkill: "Lovely Spear", backSkill: "Spear Jab"
+                },
+                "+1": { price: 1200,
+                    patk: 35, pdef: 60, matk: 0, mdef: 0, crit: 5, hit: 7, eva: 0,
+                    frontSkill: "Lovely Spear", backSkill: "Spear Jab"
+                },
+                "+2": { price: 1400,
+                    patk: 50, pdef: 90, matk: 0, mdef: 0, crit: 6, hit: 9, eva: 0,
+                    frontSkill: "Lovely Spear", backSkill: "Spear Jab"
+                },
+                "+3": { price: 1600,
+                    patk: 65, pdef: 130, matk: 0, mdef: 0, crit: 7, hit: 11, eva: 0,
+                    frontSkill: "Lovely Spear", backSkill: "Spear Jab"
+                },
+                "+4": { price: 2000,
+                    patk: 88, pdef: 210, matk: 0, mdef: 0, crit: 10, hit: 15, eva: 0,
+                    frontSkill: "Lovely Spear", backSkill: "Spear Jab"
+                }
+            },
+            note: "", devCost: 12000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Chocolate Bar",
+                    amount: 2
+                },{
+                    materialName: "Nuts",
+                    amount: 2
+                },{
+                    materialName: "Fruit",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3005980", modelId: "98", name: "Graviton Love", commonNames: ["Graviton Love"],
+            classId: 5, type: "event", isActive: false, stats: {
+                "+0": { price: 1000,
+                    patk: 100, pdef: 0, matk: 0, mdef: 0, crit: 10, hit: 11, eva: 0,
+                    frontSkill: "Love Impact", backSkill: "Crash"
+                },
+                "+1": { price: 1200,
+                    patk: 150, pdef: 0, matk: 0, mdef: 0, crit: 11, hit: 12, eva: 0,
+                    frontSkill: "Love Impact", backSkill: "Crash"
+                },
+                "+2": { price: 1400,
+                    patk: 200, pdef: 0, matk: 0, mdef: 0, crit: 12, hit: 13, eva: 0,
+                    frontSkill: "Love Impact", backSkill: "Crash"
+                },
+                "+3": { price: 1600,
+                    patk: 250, pdef: 0, matk: 0, mdef: 0, crit: 13, hit: 14, eva: 0,
+                    frontSkill: "Love Impact", backSkill: "Crash"
+                },
+                "+4": { price: 2000,
+                    patk: 400, pdef: 0, matk: 0, mdef: 0, crit: 20, hit: 20, eva: 0,
+                    frontSkill: "Love Impact", backSkill: "Crash"
+                }
+            },
+            note: "", devCost: 12000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Chocolate Bar",
+                    amount: 2
+                },{
+                    materialName: "Nuts",
+                    amount: 2
+                },{
+                    materialName: "Fruit",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3006980", modelId: "98", name: "Giant Truffle", commonNames: ["Giant Truffle"],
+            classId: 6, type: "event", isActive: false, stats: {
+                "+0": { price: 1000,
+                    patk: 0, pdef: 30, matk: 100, mdef: 30, crit: 0, hit: 0, eva: 10,
+                    frontSkill: "Knock", backSkill: "Refreshing Love"
+                },
+                "+1": { price: 1200,
+                    patk: 0, pdef: 40, matk: 110, mdef: 40, crit: 0, hit: 0, eva: 15,
+                    frontSkill: "Knock", backSkill: "Refreshing Love"
+                },
+                "+2": { price: 1400,
+                    patk: 0, pdef: 50, matk: 120, mdef: 50, crit: 0, hit: 0, eva: 20,
+                    frontSkill: "Knock", backSkill: "Refreshing Love"
+                },
+                "+3": { price: 1600,
+                    patk: 0, pdef: 60, matk: 130, mdef: 60, crit: 0, hit: 0, eva: 25,
+                    frontSkill: "Knock", backSkill: "Refreshing Love"
+                },
+                "+4": { price: 2000,
+                    patk: 0, pdef: 85, matk: 220, mdef: 85, crit: 0, hit: 0, eva: 30,
+                    frontSkill: "Knock", backSkill: "Refreshing Love"
+                }
+            },
+            note: "", devCost: 12000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Chocolate Bar",
+                    amount: 2
+                },{
+                    materialName: "Nuts",
+                    amount: 2
+                },{
+                    materialName: "Fruit",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3007980", modelId: "98", name: "Chocolat Knife", commonNames: ["Chocolat Knife"],
+            classId: 7, type: "event", isActive: false, stats: {
+                "+0": { price: 1000,
+                    patk: 50, pdef: 0, matk: 0, mdef: 0, crit: 10, hit: 10, eva: 10,
+                    frontSkill: "Triple Sugar", backSkill: "Throwing Knife"
+                },
+                "+1": { price: 1200,
+                    patk: 70, pdef: 0, matk: 0, mdef: 0, crit: 20, hit: 20, eva: 20,
+                    frontSkill: "Triple Sugar", backSkill: "Throwing Knife"
+                },
+                "+2": { price: 1400,
+                    patk: 90, pdef: 0, matk: 0, mdef: 0, crit: 30, hit: 30, eva: 30,
+                    frontSkill: "Triple Sugar", backSkill: "Throwing Knife"
+                },
+                "+3": { price: 1600,
+                    patk: 110, pdef: 0, matk: 0, mdef: 0, crit: 40, hit: 40, eva: 40,
+                    frontSkill: "Triple Sugar", backSkill: "Throwing Knife"
+                },
+                "+4": { price: 2000,
+                    patk: 160, pdef: 0, matk: 0, mdef: 0, crit: 50, hit: 50, eva: 50,
+                    frontSkill: "Triple Sugar", backSkill: "Throwing Knife"
+                }
+            },
+            note: "", devCost: 12000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Chocolate Bar",
+                    amount: 2
+                },{
+                    materialName: "Nuts",
+                    amount: 2
+                },{
+                    materialName: "Fruit",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3008980", modelId: "98", name: "Forked Love", commonNames: ["Forked Love"],
+            classId: 8, type: "event", isActive: false, stats: {
+                "+0": { price: 1500,
+                    patk: 0, pdef: 0, matk: 50, mdef: 50, crit: 5, hit: 15, eva: 0,
+                    frontSkill: "Honey Trap", backSkill: "Honey Trap"
+                },
+                "+1": { price: 1500,
+                    patk: 0, pdef: 0, matk: 80, mdef: 60, crit: 6, hit: 18, eva: 0,
+                    frontSkill: "Honey Trap", backSkill: "Honey Trap"
+                },
+                "+2": { price: 1500,
+                    patk: 0, pdef: 0, matk: 110, mdef: 70, crit: 7, hit: 21, eva: 0,
+                    frontSkill: "Honey Trap", backSkill: "Honey Trap"
+                },
+                "+3": { price: 1500,
+                    patk: 0, pdef: 0, matk: 140, mdef: 80, crit: 8, hit: 24, eva: 0,
+                    frontSkill: "Honey Trap", backSkill: "Honey Trap"
+                },
+                "+4": { price: 1500,
+                    patk: 0, pdef: 0, matk: 210, mdef: 100, crit: 15, hit: 40, eva: 0,
+                    frontSkill: "Honey Trap", backSkill: "Honey Trap"
+                }
+            },
+            note: "", devCost: 12000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Chocolate Bar",
+                    amount: 2
+                },{
+                    materialName: "Nuts",
+                    amount: 2
+                },{
+                    materialName: "Fruit",
+                    amount: 2
+                }
+            ]
+        }
+    ],
+
+    "valentine2-black": [
+        {
+            _id: "3001851", modelId: "85", name: "Patisserie Blade", commonNames: ["Patisserie Blade"],
+            classId: 1, type: "event", isActive: false, stats: {
+                "+0": { price: 1500,
+                    patk: 56, pdef: 54, matk: 0, mdef: 55, crit: 16, hit: 16, eva: 15,
+                    frontSkill: "Nappe Slash", backSkill: "Slash"
+                },
+                "+1": { price: 1500,
+                    patk: 71, pdef: 66, matk: 0, mdef: 73, crit: 19, hit: 16, eva: 18,
+                    frontSkill: "Nappe Slash", backSkill: "Slash"
+                },
+                "+2": { price: 1500,
+                    patk: 92, pdef: 81, matk: 0, mdef: 91, crit: 24, hit: 16, eva: 22,
+                    frontSkill: "Nappe Slash", backSkill: "V Slash"
+                },
+                "+3": { price: 1500,
+                    patk: 107, pdef: 95, matk: 0, mdef: 100, crit: 27, hit: 16, eva: 28,
+                    frontSkill: "Nappe Slash", backSkill: "V Slash"
+                },
+                "+4": { price: 1500,
+                    patk: 173, pdef: 154, matk: 0, mdef: 157, crit: 35, hit: 16, eva: 35,
+                    frontSkill: "Nappe Slash", backSkill: "V Slash"
+                }
+            },
+            note: "", devCost: 15000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Magical Cacao",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3002851", modelId: "85", name: "Chou - Ikiiggatana", commonNames: ["Chou - Ikiiggatana"],
+            classId: 2, type: "event", isActive: false, stats: {
+                "+0": { price: 1500,
+                    patk: 98, pdef: 0, matk: 0, mdef: 0, crit: 25, hit: 0, eva: 21,
+                    frontSkill: "Thousand-Night Powder Sword", backSkill: "Slash"
+                },
+                "+1": { price: 1500,
+                    patk: 119, pdef: 0, matk: 0, mdef: 0, crit: 30, hit: 0, eva: 25,
+                    frontSkill: "Thousand-Night Powder Sword", backSkill: "Slash"
+                },
+                "+2": { price: 1500,
+                    patk: 160, pdef: 0, matk: 0, mdef: 0, crit: 35, hit: 0, eva: 30,
+                    frontSkill: "Thousand-Night Powder Sword", backSkill: "Cleave"
+                },
+                "+3": { price: 1500,
+                    patk: 186, pdef: 0, matk: 0, mdef: 0, crit: 40, hit: 0, eva: 33,
+                    frontSkill: "Thousand-Night Powder Sword", backSkill: "Cleave"
+                },
+                "+4": { price: 1500,
+                    patk: 298, pdef: 0, matk: 0, mdef: 0, crit: 45, hit: 0, eva: 40,
+                    frontSkill: "Thousand-Night Powder Sword", backSkill: "Cleave"
+                }
+            },
+            note: "", devCost: 15000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Magical Cacao",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3003851", modelId: "85", name: "Love Bow \"Honmei\"", commonNames: ["Love Bow \"Honmei\""],
+            classId: 3, type: "event", isActive: false, stats: {
+                "+0": { price: 1500,
+                    patk: 73, pdef: 0, matk: 0, mdef: 0, crit: 13, hit: 0, eva: 15,
+                    frontSkill: "Single Shot", backSkill: "Gift Snipe"
+                },
+                "+1": { price: 1500,
+                    patk: 93, pdef: 0, matk: 0, mdef: 0, crit: 17, hit: 0, eva: 18,
+                    frontSkill: "Single Shot", backSkill: "Gift Snipe"
+                },
+                "+2": { price: 1500,
+                    patk: 122, pdef: 0, matk: 0, mdef: 0, crit: 20, hit: 0, eva: 21,
+                    frontSkill: "Twin Shot", backSkill: "Gift Snipe"
+                },
+                "+3": { price: 1500,
+                    patk: 155, pdef: 0, matk: 0, mdef: 0, crit: 29, hit: 0, eva: 35,
+                    frontSkill: "Twin Shot", backSkill: "Gift Snipe"
+                },
+                "+4": { price: 1500,
+                    patk: 269, pdef: 0, matk: 0, mdef: 0, crit: 35, hit: 0, eva: 40,
+                    frontSkill: "Twin Shot", backSkill: "Gift Snipe"
+                }
+            },
+            note: "", devCost: 15000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Magical Cacao",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3004851", modelId: "85", name: "Cream Cacao Lance", commonNames: ["Cream Cacao Lance"],
+            classId: 4, type: "event", isActive: false, stats: {
+                "+0": { price: 1500,
+                    patk: 29, pdef: 55, matk: 0, mdef: 0, crit: 15, hit: 0, eva: 17,
+                    frontSkill: "Squeeze Strike", backSkill: "Spear Jab"
+                },
+                "+1": { price: 1500,
+                    patk: 32, pdef: 69, matk: 0, mdef: 0, crit: 15, hit: 0, eva: 20,
+                    frontSkill: "Squeeze Strike", backSkill: "Spear Jab"
+                },
+                "+2": { price: 1500,
+                    patk: 41, pdef: 95, matk: 0, mdef: 0, crit: 20, hit: 0, eva: 22,
+                    frontSkill: "Squeeze Strike", backSkill: "Double Strike"
+                },
+                "+3": { price: 1500,
+                    patk: 46, pdef: 129, matk: 0, mdef: 0, crit: 25, hit: 0, eva: 23,
+                    frontSkill: "Squeeze Strike", backSkill: "Double Strike"
+                },
+                "+4": { price: 1500,
+                    patk: 82, pdef: 246, matk: 0, mdef: 0, crit: 35, hit: 0, eva: 25,
+                    frontSkill: "Squeeze Strike", backSkill: "Double Strike"
+                }
+            },
+            note: "", devCost: 15000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Magical Cacao",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3005851", modelId: "85", name: "Warrior Beater", commonNames: ["Warrior Beater"],
+            classId: 5, type: "event", isActive: false, stats: {
+                "+0": { price: 1500,
+                    patk: 114, pdef: 0, matk: 0, mdef: 0, crit: 15, hit: 0, eva: 15,
+                    frontSkill: "Fouet Impact", backSkill: "Crash"
+                },
+                "+1": { price: 1500,
+                    patk: 148, pdef: 0, matk: 0, mdef: 0, crit: 18, hit: 0, eva: 18,
+                    frontSkill: "Fouet Impact", backSkill: "Crash"
+                },
+                "+2": { price: 1500,
+                    patk: 187, pdef: 0, matk: 0, mdef: 0, crit: 22, hit: 0, eva: 22,
+                    frontSkill: "Fouet Impact", backSkill: "Swing"
+                },
+                "+3": { price: 1500,
+                    patk: 248, pdef: 0, matk: 0, mdef: 0, crit: 25, hit: 0, eva: 25,
+                    frontSkill: "Fouet Impact", backSkill: "Swing"
+                },
+                "+4": { price: 1500,
+                    patk: 450, pdef: 0, matk: 0, mdef: 0, crit: 30, hit: 0, eva: 30,
+                    frontSkill: "Fouet Impact", backSkill: "Swing"
+                }
+            },
+            note: "", devCost: 15000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Magical Cacao",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3006851", modelId: "85", name: "Claudius 2nd", commonNames: ["Claudius 2nd"],
+            classId: 6, type: "event", isActive: false, stats: {
+                "+0": { price: 1500,
+                    patk: 0, pdef: 24, matk: 57, mdef: 24, crit: 13, hit: 0, eva: 27,
+                    frontSkill: "Knock", backSkill: "Cake de Heal"
+                },
+                "+1": { price: 1500,
+                    patk: 0, pdef: 28, matk: 73, mdef: 30, crit: 16, hit: 0, eva: 29,
+                    frontSkill: "Knock", backSkill: "Cake de Heal"
+                },
+                "+2": { price: 1500,
+                    patk: 0, pdef: 37, matk: 95, mdef: 40, crit: 19, hit: 0, eva: 30,
+                    frontSkill: "Knock", backSkill: "Cake de Heal"
+                },
+                "+3": { price: 1500,
+                    patk: 0, pdef: 49, matk: 119, mdef: 49, crit: 22, hit: 0, eva: 32,
+                    frontSkill: "Knock", backSkill: "Cake de Heal"
+                },
+                "+4": { price: 1500,
+                    patk: 0, pdef: 89, matk: 230, mdef: 91, crit: 25, hit: 0, eva: 35,
+                    frontSkill: "Knock", backSkill: "Cake de Heal"
+                }
+            },
+            note: "", devCost: 15000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Magical Cacao",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3007851", modelId: "85", name: "Battle Spoon Oosaji", commonNames: ["Battle Spoon Oosaji"],
+            classId: 7, type: "event", isActive: false, stats: {
+                "+0": { price: 1500,
+                    patk: 55, pdef: 0, matk: 0, mdef: 0, crit: 35, hit: 20, eva: 35,
+                    frontSkill: "Sprinkle Sugar", backSkill: "Twin Attack"
+                },
+                "+1": { price: 1500,
+                    patk: 70, pdef: 0, matk: 0, mdef: 0, crit: 37, hit: 25, eva: 37,
+                    frontSkill: "Sprinkle Sugar", backSkill: "Twin Attack"
+                },
+                "+2": { price: 1500,
+                    patk: 79, pdef: 0, matk: 0, mdef: 0, crit: 39, hit: 25, eva: 39,
+                    frontSkill: "Sprinkle Sugar", backSkill: "Dance Formation"
+                },
+                "+3": { price: 1500,
+                    patk: 122, pdef: 0, matk: 0, mdef: 0, crit: 42, hit: 30, eva: 42,
+                    frontSkill: "Sprinkle Sugar", backSkill: "Dance Formation"
+                },
+                "+4": { price: 1500,
+                    patk: 204, pdef: 0, matk: 0, mdef: 0, crit: 45, hit: 30, eva: 45,
+                    frontSkill: "Sprinkle Sugar", backSkill: "Dance Formation"
+                }
+            },
+            note: "", devCost: 15000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Magical Cacao",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3008851", modelId: "85", name: "Cacao Mass Wand", commonNames: ["Cacao Mass Wand"],
+            classId: 8, type: "event", isActive: false, stats: {
+                "+0": { price: 1500,
+                    patk: 0, pdef: 0, matk: 68, mdef: 0, crit: 15, hit: 0, eva: 15,
+                    frontSkill: "Fire Ball", backSkill: "Theobroma"
+                },
+                "+1": { price: 1500,
+                    patk: 0, pdef: 0, matk: 93, mdef: 0, crit: 19, hit: 0, eva: 19,
+                    frontSkill: "Fire Ball", backSkill: "Theobroma"
+                },
+                "+2": { price: 1500,
+                    patk: 0, pdef: 0, matk: 118, mdef: 0, crit: 23, hit: 0, eva: 23,
+                    frontSkill: "Darkness Blade", backSkill: "Theobroma"
+                },
+                "+3": { price: 1500,
+                    patk: 0, pdef: 0, matk: 160, mdef: 0, crit: 24, hit: 0, eva: 24,
+                    frontSkill: "Darkness Blade", backSkill: "Theobroma"
+                },
+                "+4": { price: 1500,
+                    patk: 0, pdef: 0, matk: 260, mdef: 0, crit: 35, hit: 0, eva: 35,
+                    frontSkill: "Darkness Blade", backSkill: "Theobroma"
+                }
+            },
+            note: "", devCost: 15000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Magical Cacao",
+                    amount: 2
+                }
+            ]
+        }
+    ],
+
+    "valentine2-white": [
+        {
+            _id: "3001861", modelId: "86", name: "Spatule Sword", commonNames: ["Spatule Sword"],
+            classId: 1, type: "event", isActive: false, stats: {
+                "+0": { price: 1500,
+                    patk: 56, pdef: 54, matk: 0, mdef: 55, crit: 16, hit: 16, eva: 15,
+                    frontSkill: "Nappe Slash", backSkill: "Slash"
+                },
+                "+1": { price: 1500,
+                    patk: 71, pdef: 66, matk: 0, mdef: 73, crit: 19, hit: 16, eva: 18,
+                    frontSkill: "Nappe Slash", backSkill: "Slash"
+                },
+                "+2": { price: 1500,
+                    patk: 92, pdef: 81, matk: 0, mdef: 91, crit: 24, hit: 16, eva: 22,
+                    frontSkill: "Nappe Slash", backSkill: "V Slash"
+                },
+                "+3": { price: 1500,
+                    patk: 107, pdef: 95, matk: 0, mdef: 100, crit: 27, hit: 16, eva: 28,
+                    frontSkill: "Nappe Slash", backSkill: "V Slash"
+                },
+                "+4": { price: 1500,
+                    patk: 173, pdef: 154, matk: 0, mdef: 157, crit: 35, hit: 16, eva: 35,
+                    frontSkill: "Nappe Slash", backSkill: "V Slash"
+                }
+            },
+            note: "", devCost: 15000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Magical Cacao",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3002861", modelId: "86", name: "Shin - Hanabanaomaru", commonNames: ["Shin - Hanabanaomaru"],
+            classId: 2, type: "event", isActive: false, stats: {
+                "+0": { price: 1500,
+                    patk: 98, pdef: 0, matk: 0, mdef: 0, crit: 25, hit: 0, eva: 21,
+                    frontSkill: "Thousand-Night Powder Sword", backSkill: "Slash"
+                },
+                "+1": { price: 1500,
+                    patk: 119, pdef: 0, matk: 0, mdef: 0, crit: 30, hit: 0, eva: 25,
+                    frontSkill: "Thousand-Night Powder Sword", backSkill: "Slash"
+                },
+                "+2": { price: 1500,
+                    patk: 160, pdef: 0, matk: 0, mdef: 0, crit: 35, hit: 0, eva: 30,
+                    frontSkill: "Thousand-Night Powder Sword", backSkill: "Cleave"
+                },
+                "+3": { price: 1500,
+                    patk: 186, pdef: 0, matk: 0, mdef: 0, crit: 40, hit: 0, eva: 33,
+                    frontSkill: "Thousand-Night Powder Sword", backSkill: "Cleave"
+                },
+                "+4": { price: 1500,
+                    patk: 298, pdef: 0, matk: 0, mdef: 0, crit: 45, hit: 0, eva: 40,
+                    frontSkill: "Thousand-Night Powder Sword", backSkill: "Cleave"
+                }
+            },
+            note: "", devCost: 15000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Magical Cacao",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3003861", modelId: "86", name: "Bow of Lupercus", commonNames: ["Bow of Lupercus"],
+            classId: 3, type: "event", isActive: false, stats: {
+                "+0": { price: 1500,
+                    patk: 73, pdef: 0, matk: 0, mdef: 0, crit: 13, hit: 0, eva: 15,
+                    frontSkill: "Single Shot", backSkill: "Gift Snipe"
+                },
+                "+1": { price: 1500,
+                    patk: 93, pdef: 0, matk: 0, mdef: 0, crit: 17, hit: 0, eva: 18,
+                    frontSkill: "Single Shot", backSkill: "Gift Snipe"
+                },
+                "+2": { price: 1500,
+                    patk: 122, pdef: 0, matk: 0, mdef: 0, crit: 20, hit: 0, eva: 21,
+                    frontSkill: "Twin Shot", backSkill: "Gift Snipe"
+                },
+                "+3": { price: 1500,
+                    patk: 155, pdef: 0, matk: 0, mdef: 0, crit: 29, hit: 0, eva: 35,
+                    frontSkill: "Twin Shot", backSkill: "Gift Snipe"
+                },
+                "+4": { price: 1500,
+                    patk: 269, pdef: 0, matk: 0, mdef: 0, crit: 35, hit: 0, eva: 40,
+                    frontSkill: "Twin Shot", backSkill: "Gift Snipe"
+                }
+            },
+            note: "", devCost: 15000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Magical Cacao",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3004861", modelId: "86", name: "Cream Cacao Spear", commonNames: ["Cream Cacao Spear"],
+            classId: 4, type: "event", isActive: false, stats: {
+                "+0": { price: 1500,
+                    patk: 29, pdef: 55, matk: 0, mdef: 0, crit: 15, hit: 0, eva: 17,
+                    frontSkill: "Squeeze Strike", backSkill: "Spear Jab"
+                },
+                "+1": { price: 1500,
+                    patk: 32, pdef: 69, matk: 0, mdef: 0, crit: 15, hit: 0, eva: 20,
+                    frontSkill: "Squeeze Strike", backSkill: "Spear Jab"
+                },
+                "+2": { price: 1500,
+                    patk: 41, pdef: 95, matk: 0, mdef: 0, crit: 20, hit: 0, eva: 22,
+                    frontSkill: "Squeeze Strike", backSkill: "Double Strike"
+                },
+                "+3": { price: 1500,
+                    patk: 46, pdef: 129, matk: 0, mdef: 0, crit: 25, hit: 0, eva: 23,
+                    frontSkill: "Squeeze Strike", backSkill: "Double Strike"
+                },
+                "+4": { price: 1500,
+                    patk: 82, pdef: 246, matk: 0, mdef: 0, crit: 35, hit: 0, eva: 25,
+                    frontSkill: "Squeeze Strike", backSkill: "Double Strike"
+                }
+            },
+            note: "", devCost: 15000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Magical Cacao",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3005861", modelId: "86", name: "Warrior Whipper", commonNames: ["Warrior Whipper"],
+            classId: 5, type: "event", isActive: false, stats: {
+                "+0": { price: 1500,
+                    patk: 114, pdef: 0, matk: 0, mdef: 0, crit: 15, hit: 0, eva: 15,
+                    frontSkill: "Fouet Impact", backSkill: "Crash"
+                },
+                "+1": { price: 1500,
+                    patk: 148, pdef: 0, matk: 0, mdef: 0, crit: 18, hit: 0, eva: 18,
+                    frontSkill: "Fouet Impact", backSkill: "Crash"
+                },
+                "+2": { price: 1500,
+                    patk: 187, pdef: 0, matk: 0, mdef: 0, crit: 22, hit: 0, eva: 22,
+                    frontSkill: "Fouet Impact", backSkill: "Swing"
+                },
+                "+3": { price: 1500,
+                    patk: 248, pdef: 0, matk: 0, mdef: 0, crit: 25, hit: 0, eva: 25,
+                    frontSkill: "Fouet Impact", backSkill: "Swing"
+                },
+                "+4": { price: 1500,
+                    patk: 450, pdef: 0, matk: 0, mdef: 0, crit: 30, hit: 0, eva: 30,
+                    frontSkill: "Fouet Impact", backSkill: "Swing"
+                }
+            },
+            note: "", devCost: 15000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Magical Cacao",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3006861", modelId: "86", name: "Saint Valentine", commonNames: ["Saint Valentine"],
+            classId: 6, type: "event", isActive: false, stats: {
+                "+0": { price: 1500,
+                    patk: 0, pdef: 24, matk: 57, mdef: 24, crit: 13, hit: 0, eva: 27,
+                    frontSkill: "Knock", backSkill: "Cake de Heal"
+                },
+                "+1": { price: 1500,
+                    patk: 0, pdef: 28, matk: 73, mdef: 30, crit: 16, hit: 0, eva: 29,
+                    frontSkill: "Knock", backSkill: "Cake de Heal"
+                },
+                "+2": { price: 1500,
+                    patk: 0, pdef: 37, matk: 95, mdef: 40, crit: 19, hit: 0, eva: 30,
+                    frontSkill: "Knock", backSkill: "Cake de Heal"
+                },
+                "+3": { price: 1500,
+                    patk: 0, pdef: 49, matk: 119, mdef: 49, crit: 22, hit: 0, eva: 32,
+                    frontSkill: "Knock", backSkill: "Cake de Heal"
+                },
+                "+4": { price: 1500,
+                    patk: 0, pdef: 89, matk: 230, mdef: 91, crit: 25, hit: 0, eva: 35,
+                    frontSkill: "Knock", backSkill: "Cake de Heal"
+                }
+            },
+            note: "", devCost: 15000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Magical Cacao",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3007861", modelId: "86", name: "Lovely Spoon Oosaji", commonNames: ["Lovely Spoon Oosaji"],
+            classId: 7, type: "event", isActive: false, stats: {
+                "+0": { price: 1500,
+                    patk: 55, pdef: 0, matk: 0, mdef: 0, crit: 35, hit: 20, eva: 35,
+                    frontSkill: "Sprinkle Sugar", backSkill: "Twin Attack"
+                },
+                "+1": { price: 1500,
+                    patk: 70, pdef: 0, matk: 0, mdef: 0, crit: 37, hit: 25, eva: 37,
+                    frontSkill: "Sprinkle Sugar", backSkill: "Twin Attack"
+                },
+                "+2": { price: 1500,
+                    patk: 79, pdef: 0, matk: 0, mdef: 0, crit: 39, hit: 25, eva: 39,
+                    frontSkill: "Sprinkle Sugar", backSkill: "Dance Formation"
+                },
+                "+3": { price: 1500,
+                    patk: 122, pdef: 0, matk: 0, mdef: 0, crit: 42, hit: 30, eva: 42,
+                    frontSkill: "Sprinkle Sugar", backSkill: "Dance Formation"
+                },
+                "+4": { price: 1500,
+                    patk: 204, pdef: 0, matk: 0, mdef: 0, crit: 45, hit: 30, eva: 45,
+                    frontSkill: "Sprinkle Sugar", backSkill: "Dance Formation"
+                }
+            },
+            note: "", devCost: 15000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Magical Cacao",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "3008861", modelId: "86", name: "Yunofes Wand", commonNames: ["Yunofes Wand"],
+            classId: 8, type: "event", isActive: false, stats: {
+                "+0": { price: 1500,
+                    patk: 0, pdef: 0, matk: 68, mdef: 0, crit: 15, hit: 0, eva: 15,
+                    frontSkill: "Fire Ball", backSkill: "Theobroma"
+                },
+                "+1": { price: 1500,
+                    patk: 0, pdef: 0, matk: 93, mdef: 0, crit: 19, hit: 0, eva: 19,
+                    frontSkill: "Fire Ball", backSkill: "Theobroma"
+                },
+                "+2": { price: 1500,
+                    patk: 0, pdef: 0, matk: 118, mdef: 0, crit: 23, hit: 0, eva: 23,
+                    frontSkill: "Darkness Blade", backSkill: "Theobroma"
+                },
+                "+3": { price: 1500,
+                    patk: 0, pdef: 0, matk: 160, mdef: 0, crit: 24, hit: 0, eva: 24,
+                    frontSkill: "Darkness Blade", backSkill: "Theobroma"
+                },
+                "+4": { price: 1500,
+                    patk: 0, pdef: 0, matk: 260, mdef: 0, crit: 35, hit: 0, eva: 35,
+                    frontSkill: "Darkness Blade", backSkill: "Theobroma"
+                }
+            },
+            note: "", devCost: 15000, levelRequired: 10, tier: 4, recipe: [
+                {
+                    materialName: "Magical Cacao",
+                    amount: 2
+                }
+            ]
+        }
+    ],
+
     "cw": [
         {
             _id: "308119", modelId: "19", name: "Fenris Novem", commonNames: ["Fenris Novem"],
@@ -4276,34 +5528,291 @@ module.exports = {
                 }
             ]
         },{
-            _id: "308806", modelId: "06", name: "Holy Rod \"Storia\"", commonNames: ["Holy Rod \"Storia\""],
-            characterId: "10840001_1af29f14", type: "character", isActive: true, stats: {
-                "+0": { price: 3600,
-                    patk: 0, pdef: 0, matk: 152, mdef: 0, crit: 35, hit: 0, eva: 15,
-                    frontSkill: "Holy Cross", backSkill: "Holy Cross"
+            _id: "308121", modelId: "21", name: "Blue Rose", commonNames: ["Blue Rose"],
+            characterId: "10150003_e989854c", type: "character", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 108, pdef: 82, matk: 0, mdef: 82, crit: 15, hit: 15, eva: 10,
+                    frontSkill: "Double Slash", backSkill: "V Slash"
                 },
                 "+1": { price: 6000,
-                    patk: 0, 3960: 0, matk: 195, mdef: 0, crit: 45, hit: 0, eva: 25,
-                    frontSkill: "Seraph Ray", backSkill: "Seraph Ray"
+                    patk: 124, pdef: 86, matk: 0, mdef: 86, crit: 20, hit: 20, eva: 10,
+                    frontSkill: "Power Slash", backSkill: "V Slash"
                 },
-                "+2": { price: 4500,
-                    patk: 0, pdef: 0, matk: 250, mdef: 0, crit: 50, hit: 0, eva: 25,
-                    frontSkill: "Seraph Ray", backSkill: "Seraph Ray"
+                "+2": { price: 7000,
+                    patk: 172, pdef: 114, matk: 0, mdef: 124, crit: 20, hit: 25, eva: 15,
+                    frontSkill: "Power Slash", backSkill: "Double Slash"
                 },
-                "+3": { price: 6120,
-                    patk: 0, pdef: 0, matk: 340, mdef: 0, crit: 55, hit: 0, eva: 30,
-                    frontSkill: "Eternal Light", backSkill: "Eternal Light"
+                "+3": { price: 8000,
+                    patk: 228, pdef: 152, matk: 0, mdef: 172, crit: 25, hit: 25, eva: 20,
+                    frontSkill: "Novalis", backSkill: "Double Slash"
                 }
             },
-            note: "", devCost: 32400, levelRequired: 60, tier: 3, recipe: [
+            note: "", devCost: 49220, levelRequired: 70, tier: 3, recipe: [
                 {
-                    materialName: "Ebony Branch",
+                    materialName: "Mithril Ore",
                     amount: 2
                 },{
-                    materialName: "Black Pearl",
+                    materialName: "Rose Quartz",
                     amount: 1
                 },{
-                    materialName: "Full Moon Fragment",
+                    materialName: "Holy Water",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "308214", modelId: "14", name: "Spirit Sword \"Soul Eater\"", commonNames: ["Spirit Sword \"Soul Eater\""],
+            characterId: "10250001_ff1a69c9", type: "character", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 180, pdef: 0, matk: 0, mdef: 0, crit: 55, hit: 40, eva: 30,
+                    frontSkill: "Helmet Splitter", backSkill: "Slash"
+                },
+                "+1": { price: 6000,
+                    patk: 228, pdef: 0, matk: 0, mdef: 0, crit: 60, hit: 40, eva: 40,
+                    frontSkill: "100 Demon Slayer", backSkill: "Slash"
+                },
+                "+2": { price: 7000,
+                    patk: 284, pdef: 0, matk: 0, mdef: 0, crit: 65, hit: 45, eva: 50,
+                    frontSkill: "Secret Blade Maiyasha", backSkill: "Iaido Slash"
+                },
+                "+3": { price: 8000,
+                    patk: 347, pdef: 0, matk: 0, mdef: 0, crit: 75, hit: 50, eva: 60,
+                    frontSkill: "Soul Eater", backSkill: "Iaido Slash"
+                }
+            },
+            note: "", devCost: 49220, levelRequired: 70, tier: 3, recipe: [
+                {
+                    materialName: "Sun Fragment",
+                    amount: 2
+                },{
+                    materialName: "Lapis Lazuli",
+                    amount: 1
+                },{
+                    materialName: "Holy Water",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "308319", modelId: "19", name: "Bow of God \"Caldia\"", commonNames: ["Bow of God \"Caldia\""],
+            characterId: "10350002_63194dbd", type: "character", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 143, pdef: 0, matk: 0, mdef: 0, crit: 24, hit: 24, eva: 22,
+                    frontSkill: "Twin Shot", backSkill: "Triple Shot"
+                },
+                "+1": { price: 6000,
+                    patk: 179, pdef: 0, matk: 0, mdef: 0, crit: 32, hit: 32, eva: 26,
+                    frontSkill: "Twin Shot", backSkill: "Delta Shot"
+                },
+                "+2": { price: 7000,
+                    patk: 197, pdef: 0, matk: 0, mdef: 0, crit: 42, hit: 42, eva: 30,
+                    frontSkill: "Chain Shot", backSkill: "Vermilion Cannon"
+                },
+                "+3": { price: 8000,
+                    patk: 324, pdef: 0, matk: 0, mdef: 0, crit: 54, hit: 54, eva: 36,
+                    frontSkill: "Chain Shot", backSkill: "Elf's Squall"
+                }
+            },
+            note: "", devCost: 49220, levelRequired: 70, tier: 3, recipe: [
+                {
+                    materialName: "Holy Cloth",
+                    amount: 2
+                },{
+                    materialName: "Emerald",
+                    amount: 1
+                },{
+                    materialName: "Yggdrasil Branch",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "308320", modelId: "20", name: "Nasu Sunshine Bow", commonNames: ["Nasu Sunshine Bow"],
+            characterId: "10350003_fcc3ce23", type: "character", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 141, pdef: 0, matk: 0, mdef: 0, crit: 24, hit: 26, eva: 15,
+                    frontSkill: "Twin Shot", backSkill: "Triple Shot"
+                },
+                "+1": { price: 6000,
+                    patk: 178, pdef: 0, matk: 0, mdef: 0, crit: 30, hit: 34, eva: 21,
+                    frontSkill: "Twin Shot", backSkill: "Spread Shot"
+                },
+                "+2": { price: 7000,
+                    patk: 195, pdef: 0, matk: 0, mdef: 0, crit: 36, hit: 45, eva: 28,
+                    frontSkill: "Chain Shot", backSkill: "Spirit Rain"
+                },
+                "+3": { price: 8000,
+                    patk: 322, pdef: 0, matk: 0, mdef: 0, crit: 42, hit: 56, eva: 36,
+                    frontSkill: "Chain Shot", backSkill: "Nasu-style Secret Move - Hinano"
+                }
+            },
+            note: "", devCost: 49220, levelRequired: 70, tier: 3, recipe: [
+                {
+                    materialName: "Holy Cloth",
+                    amount: 2
+                },{
+                    materialName: "Emerald",
+                    amount: 1
+                },{
+                    materialName: "Yggdrasil Branch",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "308419", modelId: "19", name: "Final Spear \"Ragnarok\"", commonNames: ["Final Spear \"Ragnarok\""],
+            characterId: "10450002_bbda369b", type: "character", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 81, pdef: 119, matk: 0, mdef: 23, crit: 10, hit: 8, eva: 0,
+                    frontSkill: "Double Dragon Strike", backSkill: "Double Strike"
+                },
+                "+1": { price: 6000,
+                    patk: 97, pdef: 161, matk: 0, mdef: 27, crit: 10, hit: 12, eva: 0,
+                    frontSkill: "Ice Collision", backSkill: "Double Strike"
+                },
+                "+2": { price: 7000,
+                    patk: 129, pdef: 251, matk: 0, mdef: 37, crit: 15, hit: 14, eva: 0,
+                    frontSkill: "Ice Collision", backSkill: "Full-On Collision"
+                },
+                "+3": { price: 8000,
+                    patk: 148, pdef: 302, matk: 0, mdef: 48, crit: 25, hit: 18, eva: 0,
+                    frontSkill: "Fimbulvetr", backSkill: "Full-On Collision"
+                }
+            },
+            note: "", devCost: 49220, levelRequired: 70, tier: 3, recipe: [
+                {
+                    materialName: "Mithril Ore",
+                    amount: 2
+                },{
+                    materialName: "Garnet",
+                    amount: 1
+                },{
+                    materialName: "Dragon Horn",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "308510", modelId: "10", name: "Apocalypse", commonNames: ["Apocalypse"],
+            characterId: "10550001_27d912ef", type: "character", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 227, pdef: 0, matk: 0, mdef: 0, crit: 100, hit: 24, eva: 0,
+                    frontSkill: "Flamefall", backSkill: "Crash"
+                },
+                "+1": { price: 6000,
+                    patk: 303, pdef: 0, matk: 0, mdef: 0, crit: 120, hit: 24, eva: 0,
+                    frontSkill: "Force Impact", backSkill: "Crash"
+                },
+                "+2": { price: 7000,
+                    patk: 390, pdef: 0, matk: 0, mdef: 0, crit: 140, hit: 24, eva: 0,
+                    frontSkill: "Force Impact", backSkill: "War Rage"
+                },
+                "+3": { price: 8000,
+                    patk: 491, pdef: 0, matk: 0, mdef: 0, crit: 180, hit: 24, eva: 0,
+                    frontSkill: "Aos Wolf", backSkill: "War Rage"
+                }
+            },
+            note: "", devCost: 49220, levelRequired: 70, tier: 3, recipe: [
+                {
+                    materialName: "Dragon Horn",
+                    amount: 2
+                },{
+                    materialName: "Diamond",
+                    amount: 1
+                },{
+                    materialName: "Yggdrasil Branch",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "308524", modelId: "24", name: "Jewel Crusher", commonNames: ["Jewel Crusher"],
+            characterId: "10550002_5cc7900c", type: "character", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 222, pdef: 0, matk: 0, mdef: 0, crit: 30, hit: 30, eva: 0,
+                    frontSkill: "Hammerfall", backSkill: "Crash"
+                },
+                "+1": { price: 6000,
+                    patk: 298, pdef: 0, matk: 0, mdef: 0, crit: 40, hit: 30, eva: 0,
+                    frontSkill: "Grand Down", backSkill: "Crash"
+                },
+                "+2": { price: 7000,
+                    patk: 386, pdef: 0, matk: 0, mdef: 0, crit: 50, hit: 40, eva: 0,
+                    frontSkill: "Grand Down", backSkill: "Hammerfall"
+                },
+                "+3": { price: 8000,
+                    patk: 488, pdef: 0, matk: 0, mdef: 0, crit: 65, hit: 45, eva: 0,
+                    frontSkill: "Gorgeous Pound", backSkill: "War Rage"
+                }
+            },
+            note: "", devCost: 49220, levelRequired: 70, tier: 3, recipe: [
+                {
+                    materialName: "Dragon Horn",
+                    amount: 2
+                },{
+                    materialName: "Diamond",
+                    amount: 1
+                },{
+                    materialName: "Yggdrasil Branch",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "308619", modelId: "19", name: "Dark Cross of Els", commonNames: ["Dark Cross of Els"],
+            characterId: "10650002_ae907df4", type: "character", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 0, pdef: 60, matk: 155, mdef: 60, crit: 0, hit: 20, eva: 20,
+                    frontSkill: "Knock", backSkill: "Heavenly Breath"
+                },
+                "+1": { price: 6000,
+                    patk: 0, pdef: 70, matk: 200, mdef: 70, crit: 0, hit: 20, eva: 20,
+                    frontSkill: "Knock", backSkill: "Healing Light"
+                },
+                "+2": { price: 7000,
+                    patk: 0, pdef: 93, matk: 255, mdef: 93, crit: 0, hit: 25, eva: 25,
+                    frontSkill: "Knock", backSkill: "Healing Light"
+                },
+                "+3": { price: 8000,
+                    patk: 0, pdef: 102, matk: 355, mdef: 102, crit: 0, hit: 25, eva: 25,
+                    frontSkill: "Knock", backSkill: "Holy Poetry"
+                }
+            },
+            note: "", devCost: 49220, levelRequired: 70, tier: 3, recipe: [
+                {
+                    materialName: "Dragon Horn",
+                    amount: 2
+                },{
+                    materialName: "Emerald",
+                    amount: 1
+                },{
+                    materialName: "Mithril Ore",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "308621", modelId: "21", name: "Holy Mace of Clotho", commonNames: ["Holy Mace of Clotho"],
+            characterId: "10650003_314afe6a", type: "character", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 0, pdef: 62, matk: 147, mdef: 62, crit: 0, hit: 10, eva: 15,
+                    frontSkill: "Knock", backSkill: "Prayer"
+                },
+                "+1": { price: 6000,
+                    patk: 0, pdef: 73, matk: 192, mdef: 73, crit: 0, hit: 15, eva: 15,
+                    frontSkill: "Knock", backSkill: "Deep Fold"
+                },
+                "+2": { price: 7000,
+                    patk: 0, pdef: 96, matk: 246, mdef: 96, crit: 0, hit: 15, eva: 20,
+                    frontSkill: "Knock", backSkill: "Deep Fold"
+                },
+                "+3": { price: 8000,
+                    patk: 0, pdef: 108, matk: 328, mdef: 108, crit: 0, hit: 20, eva: 20,
+                    frontSkill: "Knock", backSkill: "Heavenly Technique - Srishti"
+                }
+            },
+            note: "**Clotho** is the youngest of the Three Fates or Moirai in ancient Greek mythology.\n**Srishti** means \"Creation\" in Hindi.\n\nReferences:\nhttps://en.wikipedia.org/wiki/Clotho", 
+            devCost: 49220, levelRequired: 70, tier: 3, recipe: [
+                {
+                    materialName: "Dragon Horn",
+                    amount: 2
+                },{
+                    materialName: "Emerald",
+                    amount: 1
+                },{
+                    materialName: "Mithril Ore",
                     amount: 2
                 }
             ]
@@ -4336,6 +5845,102 @@ module.exports = {
                     amount: 1
                 },{
                     materialName: "Sun Fragment",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "308819", modelId: "19", name: "Dark Flower Rod", commonNames: ["Dark Flower Rod"],
+            characterId: "10850002_c4678df9", type: "character", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 0, pdef: 0, matk: 169, mdef: 0, crit: 18, hit: 0, eva: 22,
+                    frontSkill: "Stone Claw", backSkill: "Stone Claw"
+                },
+                "+1": { price: 6000,
+                    patk: 0, pdef: 0, matk: 226, mdef: 0, crit: 24, hit: 0, eva: 27,
+                    frontSkill: "Voltic Arrow", backSkill: "Voltic Arrow"
+                },
+                "+2": { price: 7000,
+                    patk: 0, pdef: 0, matk: 291, mdef: 0, crit: 28, hit: 0, eva: 33,
+                    frontSkill: "Voltic Arrow", backSkill: "Voltic Arrow"
+                },
+                "+3": { price: 8000,
+                    patk: 0, pdef: 0, matk: 381, mdef: 0, crit: 34, hit: 0, eva: 38,
+                    frontSkill: "Anima", backSkill: "Anima"
+                }
+            },
+            note: "", devCost: 49220, levelRequired: 70, tier: 3, recipe: [
+                {
+                    materialName: "Sun Fragment",
+                    amount: 2
+                },{
+                    materialName: "Black Pearl",
+                    amount: 1
+                },{
+                    materialName: "Yggdrasil Branch",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "308821", modelId: "21", name: "Providence", commonNames: ["Providence"],
+            characterId: "10850005_ad800ba1", type: "character", isActive: true, stats: {
+                "+0": { price: 5000,
+                    patk: 0, pdef: 0, matk: 167, mdef: 0, crit: 22, hit: 0, eva: 22,
+                    frontSkill: "Ice Strike", backSkill: "Ice Strike"
+                },
+                "+1": { price: 6000,
+                    patk: 0, pdef: 0, matk: 224, mdef: 0, crit: 28, hit: 0, eva: 28,
+                    frontSkill: "Holy Cross", backSkill: "Holy Cross"
+                },
+                "+2": { price: 7000,
+                    patk: 0, pdef: 0, matk: 289, mdef: 0, crit: 34, hit: 0, eva: 34,
+                    frontSkill: "Seraph Ray", backSkill: "Seraph Ray"
+                },
+                "+3": { price: 8000,
+                    patk: 0, pdef: 0, matk: 379, mdef: 0, crit: 42, hit: 0, eva: 42,
+                    frontSkill: "Doom", backSkill: "Doom"
+                }
+            },
+            note: "", devCost: 49220, levelRequired: 70, tier: 3, recipe: [
+                {
+                    materialName: "Sun Fragment",
+                    amount: 2
+                },{
+                    materialName: "Black Pearl",
+                    amount: 1
+                },{
+                    materialName: "Yggdrasil Branch",
+                    amount: 2
+                }
+            ]
+        },{
+            _id: "308806", modelId: "06", name: "Holy Rod \"Storia\"", commonNames: ["Holy Rod \"Storia\""],
+            characterId: "10840001_1af29f14", type: "character", isActive: true, stats: {
+                "+0": { price: 3600,
+                    patk: 0, pdef: 0, matk: 152, mdef: 0, crit: 35, hit: 0, eva: 15,
+                    frontSkill: "Holy Cross", backSkill: "Holy Cross"
+                },
+                "+1": { price: 3960,
+                    patk: 0, pdef: 0, matk: 195, mdef: 0, crit: 45, hit: 0, eva: 25,
+                    frontSkill: "Seraph Ray", backSkill: "Seraph Ray"
+                },
+                "+2": { price: 4500,
+                    patk: 0, pdef: 0, matk: 250, mdef: 0, crit: 50, hit: 0, eva: 25,
+                    frontSkill: "Seraph Ray", backSkill: "Seraph Ray"
+                },
+                "+3": { price: 6120,
+                    patk: 0, pdef: 0, matk: 340, mdef: 0, crit: 55, hit: 0, eva: 30,
+                    frontSkill: "Eternal Light", backSkill: "Eternal Light"
+                }
+            },
+            note: "", devCost: 32400, levelRequired: 60, tier: 3, recipe: [
+                {
+                    materialName: "Ebony Branch",
+                    amount: 2
+                },{
+                    materialName: "Black Pearl",
+                    amount: 1
+                },{
+                    materialName: "Full Moon Fragment",
                     amount: 2
                 }
             ]

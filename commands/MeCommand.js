@@ -5,12 +5,12 @@ module.exports = {
 
         var userId = message.author.id;
         var player = bot.playerManager.getPlayer(userId);
-        if (player === null) {
+        var employee = bot.playerManager.getPlayerUnit(userId);
+        if (!player || !employee) {
             message.reply("You haven't selected your character.");
             return;
         }
         
-        var employee = bot.unitManager.getPlayerUnit(userId);
         if (message.channel.name === "battlefield") {
             const elementEmoji = (message.guild == null ? employee.element : message.guild.emojis.find('name', 'k' + employee.element));
 
@@ -19,12 +19,48 @@ module.exports = {
             if (player.partnerId != null) {
                 partner = bot.userManager.getUser(player.partnerId);     
             }
-            text += "Character: **" + employee.fullName + "** (" + (elementEmoji?elementEmoji+", ":"") + "Lv.**" + employee.levelCached  + "**)\n";
+
+            var elementText = (elementEmoji?elementEmoji+", ":"");
+            var promotionText = (employee.promotion>1?"**Section Manager**, ":(employee.promotion>0?"**Chief**, ":""));
+            var levelText = "Lv.**" + employee.levelCached  + "**";
+            text += "Character: **" + employee.fullName + "** (" + elementText + promotionText + levelText  + ")\n";
             var now = new Date();
             text += "HP: **" + employee.getCurrentHP() + "/" + employee.getMaxHP() + "**" + (employee.respawnTime?" (Respawn in " + bot.functionHelper.parseTime(employee.respawnTime - now.valueOf()) + ")":"") + "\n";
+            text += "Status: ";
+            for(key in employee.status) {
+                var statusName = key;
+                if (employee.status[statusName]) text += "**" + employee.status[statusName] + "** ";    
+            }
+            text += "\n";
             text += "Position: **" + (player.position == "front"?"Frontline":"Backline") + "** " + (partner?"(Partner: **" + partner.username + "**)":"") + "\n";
             text += "Skill: **" + employee.getCurrentSkill() + "**";
             
+            var isSkillReady = (employee.cooldownEndTime <= now.valueOf());
+            var isClassTraitReady = (employee.classSkillCooldownEndTime <= now.valueOf());
+            if (isSkillReady) {
+                text += " **(Ready)**\n";
+            } else {
+                var time = bot.functionHelper.parseTime(employee.cooldownEndTime - now.valueOf());
+                text += " **(" + time + ")**\n";
+            }
+            text += "Class Trait: ";
+            if (employee.getClassId() === 5 || employee.getClassId() === 7 || employee.getClassId() === 8) {
+                if (isClassTraitReady) {
+                    text += " **Ready**\n";
+                } else {
+                    var time = bot.functionHelper.parseTime(employee.classSkillCooldownEndTime - now.valueOf());
+                    text += " **" + time + "**\n";
+                }
+            } else {
+                text += "**Not available**\n";
+            }
+            if (bot.battleController && bot.battleController.trainingSession.contribution) {
+                if (typeof bot.battleController.trainingSession.contribution[userId] === "undefined") {
+                    bot.battleController.trainingSession.contribution[userId] = 0;
+                }
+                text += "Actions: **" + bot.battleController.trainingSession.contribution[userId] + "**";
+            }
+
             message.reply(text);
             return;
         }
@@ -50,9 +86,9 @@ module.exports = {
         ];
 
         var partnerSpriteFileName = null
+        var partner = bot.playerManager.getPlayer(player.partnerId);
+        var partnerEmployee = bot.playerManager.getPlayerUnit(player.partnerId);
         if (player.partnerId) {
-            var partner = bot.playerManager.getPlayer(player.partnerId);
-            var partnerEmployee = bot.unitManager.getPlayerUnit(player.partnerId);
             
             var partnerSpriteUrl = bot.urlHelper.getSpriteImageURL(partnerEmployee);
             partnerSpriteFileName = "images/enemy/" + bot.urlHelper.getSpriteImageName(partnerEmployee);
@@ -104,6 +140,7 @@ module.exports = {
 
             var itemCellFileName = "images/misc/itemCell.png";
             var backgroundFileName = bot.functionHelper.randomObject(bot.backgroundManager.backgroundFileNames);
+            // var backgroundFileName = "valentine_forest.jpg";
             backgroundFileName = "images/misc/background/" + backgroundFileName;
             var shadowFileName = "images/misc/shadow.png";
 
@@ -143,17 +180,72 @@ module.exports = {
                 }
                 shadowImage.scale(0.6);
 
+                var glowingImage = enemySpriteImage.clone();
+                if (employee.promotion > 0) {
+                    glowingImage.scan(0, 0, glowingImage.bitmap.width, glowingImage.bitmap.height, function (x, y, idx) {
+                        var red   = this.bitmap.data[ idx + 0 ];
+                        var green = this.bitmap.data[ idx + 1 ];
+                        var blue  = this.bitmap.data[ idx + 2 ];
+                        var alpha = this.bitmap.data[ idx + 3 ];
+                        if (alpha > 0) {
+                            if (employee.promotion == 1) {
+                                this.bitmap.data[ idx + 0 ] = 255;
+                                this.bitmap.data[ idx + 1 ] = 0;
+                                this.bitmap.data[ idx + 2 ] = 255;
+                                this.bitmap.data[ idx + 3 ] = 200;
+                            } else {
+                                this.bitmap.data[ idx + 0 ] = 0;
+                                this.bitmap.data[ idx + 1 ] = 0;
+                                this.bitmap.data[ idx + 2 ] = 255;
+                                this.bitmap.data[ idx + 3 ] = 200;
+                            }
+                        }
+                    });
+                    //glowingImage.gaussian(7);
+                }
+
+                var glowingPartnerImage = null;
+                if (partnerEmployee && partnerImage) {
+                    glowingPartnerImage = partnerImage.clone();
+                    if (partnerEmployee.promotion > 0) {
+                        glowingPartnerImage.scan(0, 0, glowingPartnerImage.bitmap.width, glowingPartnerImage.bitmap.height, function (x, y, idx) {
+                            var red   = this.bitmap.data[ idx + 0 ];
+                            var green = this.bitmap.data[ idx + 1 ];
+                            var blue  = this.bitmap.data[ idx + 2 ];
+                            var alpha = this.bitmap.data[ idx + 3 ];
+                            if (alpha > 0) {
+                                if (partnerEmployee.promotion == 1) {
+                                    this.bitmap.data[ idx + 0 ] = 255;
+                                    this.bitmap.data[ idx + 1 ] = 80;
+                                    this.bitmap.data[ idx + 2 ] = 255;
+                                    this.bitmap.data[ idx + 3 ] = 200;
+                                } else {
+                                    this.bitmap.data[ idx + 0 ] = 0;
+                                    this.bitmap.data[ idx + 1 ] = 0;
+                                    this.bitmap.data[ idx + 2 ] = 255;
+                                    this.bitmap.data[ idx + 3 ] = 200;
+                                }
+                            }
+                        });
+                        //glowingPartnerImage.gaussian(7);
+                    }
+                }
+                
+
                 if (player.partnerId && player.position === "front") {
                     backgroundImage
                     .composite(shadowImage, 3-15, 100-5)
+                    .composite(glowingPartnerImage, -102, -65)
                     .composite(partnerImage, -102, -65);
                 }
                 backgroundImage
                 .composite(shadowImage, 105-15, 165-5)
+                .composite(glowingImage, 0, 0)
                 .composite(enemySpriteImage, 0, 0);
                 if (player.partnerId && player.position === "back") {
                     backgroundImage
                     .composite(shadowImage, 207-15, 230-5)
+                    .composite(glowingPartnerImage, 102, 65)
                     .composite(partnerImage, 102, 65);
                 }
                 backgroundImage
@@ -197,7 +289,10 @@ module.exports = {
                             partner = bot.userManager.getUser(player.partnerId);     
                         }
                         text += "Position: **" + (player.position == "front"?"Frontline":"Backline") + "** " + (partner?"(Partner: **" + partner.username + "**)":"") + "\n";
-                        text += "Character: **" + employee.fullName + "** (" + (elementEmoji?elementEmoji+", ":"") + "Lv.**" + employee.levelCached  + "**)\n";
+                        var elementText = (elementEmoji?elementEmoji+", ":"");
+                        var promotionText = (employee.promotion>1?"**Section Manager**, ":(employee.promotion>0?"**Chief**, ":""));
+                        var levelText = "Lv.**" + employee.levelCached  + "**";
+                        text += "Character: **" + employee.fullName + "** (" + elementText + promotionText + levelText  + ")\n";
                         text += "Rarity: ";
                         for(var i=0;i<employee.getBaseRarity();i++) text += ":star:";
                         text += "\n";

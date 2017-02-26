@@ -28,9 +28,17 @@ module.exports = {
             return;
         }
 
+        var curEmployee = new Employee(bot.employeeDatabase.getEmployeeById(player.characterId));
+        var takingEmployee = new Employee(bot.employeeDatabase.getEmployeeById(bot.rollResult[userId]));
+
+        if (player.promotion > 0 && curEmployee.getBaseRarity() != takingEmployee.getBaseRarity()) {
+            message.reply("You cannot take this character.");
+            return;
+        }
+
         player.characterId = bot.rollResult[userId];
-        var expToPay = Math.min(100000, Math.floor(player.exp/2));
-        player.exp = expToPay;
+        var expToPay = Math.ceil(player.exp*0.1);
+        player.exp -= expToPay;
         
         if (player.equipedWeapon) {
             bot.playerManager.addWeapon(userId, player.equipedWeapon._id, player.equipedWeapon.plus);
@@ -45,8 +53,7 @@ module.exports = {
             player.equipedAccessory = null;
         }
         bot.savePlayer();
-        player = bot.playerManager.getPlayer(userId);
-        var employee = bot.unitManager.createUnitForPlayer(player);
+        var employee = bot.playerManager.createUnitForPlayer(player);
         message.reply("Congratulations! You have selected **" + employee.fullName + "** as your character.");
         bot.rollResult[userId] = null;
     }

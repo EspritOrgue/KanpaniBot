@@ -91,6 +91,7 @@ BattlePainter.prototype.draw = function(callback) {
 
     var queue = [];
     var readQueue = [];
+    var statusAppear = [];
     for(var i=0;i<2;i++) {
         for(var j=0;j<3;j++) {
             if (this.states["enemy"][i][j]) {
@@ -107,7 +108,8 @@ BattlePainter.prototype.draw = function(callback) {
                 readQueue.push(thumbnailFileName);
                 queue.push({
                     fileToDownload: thumbnailUrl,   fileToSave: thumbnailFileName
-                });    
+                });
+                for(key in unit.status) statusAppear[key] = true;
             }
 
             if (this.states["ally"][i][j]) {
@@ -124,7 +126,8 @@ BattlePainter.prototype.draw = function(callback) {
                 readQueue.push(thumbnailFileName);
                 queue.push({
                     fileToDownload: thumbnailUrl,   fileToSave: thumbnailFileName
-                });    
+                });
+                for(key in unit.status) statusAppear[key] = true;
             }
         }
     }
@@ -137,6 +140,7 @@ BattlePainter.prototype.draw = function(callback) {
         }
 
         var backgroundFileName = "images/misc/background/battlefield_01.jpg";
+        // var backgroundFileName = "images/misc/background/valentine_forest.jpg";
         readQueue.push(backgroundFileName);
 
         var effectFileName = null;
@@ -159,7 +163,10 @@ BattlePainter.prototype.draw = function(callback) {
         var koFileName = "images/misc/ko.png";
         readQueue.push(koFileName);
 
-
+        for(key in statusAppear) {
+            var statusFileName = "images/misc/status/"+key+".png";
+            readQueue.push(statusFileName);
+        }
         that.bot.imageHelper.read(readQueue, function (err, imageList) {
             if (err) {
                 message.reply("Error happened. Try again.");
@@ -171,7 +178,6 @@ BattlePainter.prototype.draw = function(callback) {
             var shadow = that.bot.imageManager.getShadow();
             var effect = (effectFileName?imageList[effectFileName]:null);
 
-            
             // enemy
             for(var i=1;i>=0;i--) {
                 for(var j=0;j<3;j++) {
@@ -200,10 +206,12 @@ BattlePainter.prototype.draw = function(callback) {
                         var frameNo = that.states["ally"][i][j].frame;
                         var coord = convertCoordinate(that.states["ally"][i][j].row, that.states["ally"][i][j].column);
 
-                        imageList[spriteFileName].crop((frameNo%5) * 360, Math.floor(frameNo/5) * 270, 360, 270);
-                        background
-                            .composite(shadow, coord.x + 110, coord.y + 160)
-                            .composite(imageList[spriteFileName], coord.x, coord.y);
+                        if (imageList[spriteFileName]) {
+                                imageList[spriteFileName].crop((frameNo%5) * 360, Math.floor(frameNo/5) * 270, 360, 270);
+                                background
+                                    .composite(shadow, coord.x + 110, coord.y + 160)
+                                    .composite(imageList[spriteFileName], coord.x, coord.y);    
+                        }
                     }
                 }
             }
@@ -290,6 +298,20 @@ BattlePainter.prototype.draw = function(callback) {
                             cloneHpBar.crop(0,0,percentHP*cloneHpBar.bitmap.width,cloneHpBar.bitmap.height);
                             background.composite(cloneHpBar, allyUnitPanelCoordX + 44, allyUnitPanelCoordY + 39);
 
+                            var statusCount = 0;
+                            for(key in unit.status) {
+                                if (unit.status[key]) {
+                                    var statusName = key;
+                                    var statusFileName = "images/misc/status/" + statusName + ".png";
+                                    var statusImage = imageList[statusFileName];
+                                    if (statusImage) {
+                                        background.composite(statusImage, allyUnitPanelCoordX + 44 + statusCount*17, allyUnitPanelCoordY + 22);                                
+                                        statusCount++;
+                                        if (statusCount > 2) break;    
+                                    }
+                                }
+                            }
+
                             if (unit.isFainted()) {
                                 background.composite(imageList[koFileName], allyUnitPanelCoordX + 5, allyUnitPanelCoordY + 5);
                             }
@@ -312,6 +334,19 @@ BattlePainter.prototype.draw = function(callback) {
                             var percentHP = unit.getCurrentHP() / unit.getMaxHP();
                             cloneHpBar.crop(0,0,percentHP*cloneHpBar.bitmap.width,cloneHpBar.bitmap.height);
                             background.composite(cloneHpBar, enemyUnitPanelCoordX + 44, enemyUnitPanelCoordY + 39);
+                            
+                            var statusCount = 0;
+                            for(key in unit.status) {
+                                if (unit.status[key]) {
+                                    var statusName = key;
+                                    var statusFileName = "images/misc/status/" + statusName + ".png";
+                                    if (imageList[statusFileName]) {
+                                        background.composite(imageList[statusFileName], enemyUnitPanelCoordX + 44 + statusCount*17, enemyUnitPanelCoordY + 22);                                
+                                        statusCount++;
+                                    }
+                                }
+                            }
+
                             if (unit.isFainted()) {
                                 background.composite(imageList[koFileName], enemyUnitPanelCoordX + 5, enemyUnitPanelCoordY + 5);
                             }

@@ -1,15 +1,15 @@
-var annalina = require('./EmployeeBot');
+var myBot = require('./EmployeeBot');
 var config = require('./config');
 var dialog = require('./Dialog');
 
 var trainingController = require('./controllers/TrainingController');
 
 var answerTexts = dialog.annalina.answers;
-annalina.declineNotEnoughBread = annalina.declineNotEnoughBread.concat(dialog.annalina.decline);
+myBot.declineNotEnoughBread = myBot.declineNotEnoughBread.concat(dialog.annalina.decline);
 
 function handleQuestion(message) {
     var authorId = message.author.id;
-    var text = answerTexts[annalina.functionHelper.randomInt(answerTexts.length)];
+    var text = answerTexts[myBot.functionHelper.randomInt(answerTexts.length)];
     message.reply(text);
 }
 
@@ -19,35 +19,17 @@ function getCommand(message) {
     return text.split(" ")[0];
 }
 
-annalina.bot.on("message", function(message) {
-    if (message.channel.type === "text" && message.channel.name === annalina.nutakuChannelName 
-            && message.author.id != annalina.bot.user.id) {
-        annalina.hasNewMessage = true;
-    }
-    annalina.initBreadIfNeed(message.author.id);
-
-    var command = getCommand(message);
-    switch (command) {
-    case "~question":
-        handleQuestion(message);
-        break;
-    default:
-        annalina.handleCommonCommand(message);
-        break;
-    }
-});
-
-annalina.greetings = dialog.annalina.greetings;
-annalina.idleTalks = dialog.annalina.idleTalks;
-annalina.commonGoodMorning = annalina.commonGoodMorning.concat(dialog.annalina.commonGoodMorning);
-annalina.commonGoodNight = annalina.commonGoodNight.concat(dialog.annalina.commonGoodNight);
-annalina.commonThanks = annalina.commonThanks.concat(dialog.annalina.commonThanks);
+myBot.greetings = dialog.annalina.greetings;
+myBot.idleTalks = dialog.annalina.idleTalks;
+myBot.commonGoodMorning = myBot.commonGoodMorning.concat(dialog.annalina.commonGoodMorning);
+myBot.commonGoodNight = myBot.commonGoodNight.concat(dialog.annalina.commonGoodNight);
+myBot.commonThanks = myBot.commonThanks.concat(dialog.annalina.commonThanks);
 
 var isLocal = true;
-// isLocal = false;
+isLocal = false;
 
 if (isLocal) {
-    annalina.playerData = [
+    myBot.playerData = [
         {
             _id: "240097185436270593",  // test-bot
             characterId: "10750001_32935980",
@@ -75,22 +57,73 @@ if (isLocal) {
         }
     ];
 } else {
-    annalina.playerData = [
+    myBot.playerData = [
         {
-            _id: "239141420194070530", 
-            characterId: "10840001_1af29f14",
-            exp: 5370000,//2646190,
+            _id: "272257876393721867",  // Fanaril Guest
+            characterId: "10150003_e989854c",
+            promotion: 0,
+            exp: 10707880,//10707880,
             gold: 0,
             equipedWeapon: {
-                _id: "308806",
+                _id: "308121",
                 plus: 3
             },
             equipedArmor: {
-                _id: "3108071",
+                _id: myBot.randomArmor(1),
                 plus: 0
             },
             equipedAccessory: {
-                _id: "330206",
+                _id: "330107",
+                plus: 3
+            },
+            materialList: {},
+            weaponList: {},
+            armorList: {},
+            accessoryList: {},
+            position: "front",
+            partnerId: null,
+            isTrainer: true
+        },{
+            _id: "278911842859089920",  // Nhano Guest
+            characterId: "10550002_5cc7900c",
+            promotion: 0,
+            exp: 10707880,//10707880,
+            gold: 0,
+            equipedWeapon: {
+                _id: "308524",
+                plus: 3
+            },
+            equipedArmor: {
+                _id: myBot.randomArmor(5),
+                plus: 3
+            },
+            equipedAccessory: {
+                _id: "330107",
+                plus: 3
+            },
+            materialList: {},
+            weaponList: {},
+            armorList: {},
+            accessoryList: {},
+            position: "front",
+            partnerId: null,
+            isTrainer: true
+        },{
+            _id: "283224327279869962",  // Eva Slade Guest
+            characterId: "10650002_ae907df4",
+            promotion: 0,
+            exp: 10707880,//10707880,
+            gold: 0,
+            equipedWeapon: {
+                _id: "308619",
+                plus: 3
+            },
+            equipedArmor: {
+                _id: myBot.randomArmor(6),
+                plus: 3
+            },
+            equipedAccessory: {
+                _id: "330107",
                 plus: 3
             },
             materialList: {},
@@ -104,13 +137,32 @@ if (isLocal) {
     ];
 }
 
+myBot.bot.on("message", function(message) {
+    if (message.channel.type === "text" && message.channel.name === myBot.nutakuChannelName 
+            && message.author.id != myBot.bot.user.id) {
+        myBot.hasNewMessage = true;
+    }
+    myBot.initBreadIfNeed(message.author.id);
 
-annalina.bot.on("ready", function() {
-    if (annalina.ready()) {
-        for(var i=0;i<annalina.playerData.length;i++) {
-            annalina.unitManager.createUnitForPlayer(annalina.playerData[i]);    
+    var command = getCommand(message);
+    switch (command) {
+    case "~question":
+        handleQuestion(message);
+        break;
+    default:
+        myBot.handleCommonCommand(message);
+        break;
+    }
+});
+
+myBot.bot.on("ready", function() {
+    if (myBot.ready()) {
+        for(var i=0;i<myBot.playerData.length;i++) {
+            myBot.playerManager.createUnitForPlayer(myBot.playerData[i]);    
         }
-        trainingController.bot = annalina;
+        trainingController.bot = myBot;
+        
+        
         if (isLocal) {
             trainingController.trainerField = [
                 [null, null, null],
@@ -118,12 +170,15 @@ annalina.bot.on("ready", function() {
             ];
         } else {
             trainingController.trainerField = [
-                [null, null, null],
-                [null, "239141420194070530", null]
+                [null, "272257876393721867", "278911842859089920"],
+                [null, "283224327279869962", null]
             ];    
         }
         
-        annalina.battleController = trainingController;
+        myBot.battleController = trainingController;
+        trainingController.loadSession();
     }
 });
-annalina.bot.login(config.annalina);
+
+myBot.token = config.annalina;
+myBot.login();

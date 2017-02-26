@@ -23,7 +23,9 @@ function sendTop(message, bot, result) {
         
         var emojiName = 'k' + result[i].employee.getClass().toLowerCase();
         const classEmoji = (message.guild == null ? null : message.guild.emojis.find('name', emojiName));
-        text += (rank+1) + ". " + memberName + " (**" + result[i].employee.shortName + "** " + (classEmoji == null?"":classEmoji) +", Lv.**" + result[i].employee.levelCached + "**" + (partnerName!=""?", Partner: **" + partnerName +"**":"") + ")\n";
+        var promotionText = (result[i].employee.promotion>1?"**Section Manager**, ":(result[i].employee.promotion>0?"**Chief**, ":""));
+        var levelText = "Lv.**" + result[i].employee.levelCached  + "**";
+        text += (rank+1) + ". " + memberName + " (**" + result[i].employee.shortName + "** " + (classEmoji == null?"":classEmoji) +", " + promotionText + levelText + (partnerName!=""?", Partner: **" + partnerName +"**":"") + ")\n";
     }
     message.channel.sendMessage(text);
 }
@@ -37,18 +39,22 @@ module.exports = {
         var result = [];
         for (key in bot.playerManager.playerDict) {
             var userId = key;
-            var employee = bot.unitManager.getPlayerUnit(userId);
-            result.push({
-                userId: userId,
-                employee: employee
-            });
+            var employee = bot.playerManager.getPlayerUnit(userId);
+            if (employee) {
+                result.push({
+                    userId: userId,
+                    employee: employee
+                });    
+            }
         }
         result.sort(function(a, b) {
-            if (a.employee.levelCached != b.employee.levelCached) {
-                return b.employee.levelCached - a.employee.levelCached;    
-            } else {
-                return b.employee.getBaseRarity() - a.employee.getBaseRarity();
+            if (a.employee.promotion != b.employee.promotion) {
+                return b.employee.promotion - a.employee.promotion;
             }
+            if (a.employee.levelCached != b.employee.levelCached) {
+                return b.employee.levelCached - a.employee.levelCached;
+            }
+            return b.employee.getBaseRarity() - a.employee.getBaseRarity();
         });
         
         if (bot.isPM(message)) {

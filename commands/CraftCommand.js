@@ -24,7 +24,10 @@ function isEventEquipment(codeName) {
         "xmas2-white",
         "xmas2-red",
         "xmas3-white",
-        "xmas3-black"
+        "xmas3-black",
+        "valentine1",
+        "valentine2-black",
+        "valentine2-white"
     ];
     return contains(itemListList, codeName);
 }
@@ -63,7 +66,7 @@ module.exports = {
             return;
         }
 
-        var employee = bot.unitManager.getPlayerUnit(userId);
+        var employee = bot.playerManager.getPlayerUnit(userId);
         var classId = employee.getClassId();
         if (isEventEquipment(equipmentCode)) {
             classId = bot.functionHelper.randomIntRange(1, 8);
@@ -90,7 +93,7 @@ module.exports = {
             return;
         }
 
-        if (employee.levelCached < equipmentResult.levelRequired) {
+        if (employee.promotion == 0 && employee.levelCached < equipmentResult.levelRequired) {
             message.reply("Your level (**Lv." + employee.levelCached + "**) is too low for this recipe. The minimum is **Lv." + equipmentResult.levelRequired + "**.");
             return;
         }

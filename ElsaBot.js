@@ -1,4 +1,4 @@
-var elsa = require('./EmployeeBot');
+var myBot = require('./EmployeeBot');
 var config = require('./config');
 var dialog = require('./Dialog');
 var fs = require('fs');
@@ -102,14 +102,14 @@ var status = [
     }
 ];
 
-elsa.declineNotEnoughBread = elsa.declineNotEnoughBread.concat(dialog.elsa.decline);
+myBot.declineNotEnoughBread = myBot.declineNotEnoughBread.concat(dialog.elsa.decline);
 var affectionFileName = "affection.json";
 
 function saveAffection() {
     var textToWrite = JSON.stringify(affection, null, 4);
     fs.writeFile(affectionFileName, textToWrite, function(err) {
         if(err) {
-            elsa.log(err);
+            myBot.log(err);
             return;
         }
     }); 
@@ -118,7 +118,7 @@ function saveAffection() {
 function loadAffection() {
     fs.readFile(affectionFileName, 'utf8', function (err, data) {
         if (err) {
-            elsa.log(err);
+            myBot.log(err);
             return;
         }
         affection = JSON.parse(data);
@@ -129,7 +129,7 @@ const REWARD_ROLE_NAME = 'Ally of Kemomin';
 
 function updateRole(message, member) {
     if (member == null) return;
-    if (elsa.isPM(message)) return;
+    if (myBot.isPM(message)) return;
     var allyRole = message.guild.roles.find('name', REWARD_ROLE_NAME);
     if (allyRole == null) return;
     
@@ -137,12 +137,12 @@ function updateRole(message, member) {
     if (affection[userId] >= 100) {
         member.addRole(allyRole).then(guildMember => {
         }).catch(err => {
-            elsa.log("Sorry, I don't have permission to add this Role.");
+            myBot.log("Sorry, I don't have permission to add this Role.");
         });
     } else {
         member.removeRole(allyRole).then(guildMember => {
         }).catch(err => {
-            elsa.log("Sorry, I don't have permission to remove this Role.");
+            myBot.log("Sorry, I don't have permission to remove this Role.");
         });
     }
 }
@@ -151,23 +151,23 @@ function handlePatCommand(message) {
     var userId = message.author.id;
     if (typeof lastTimePat[userId] === "undefined") lastTimePat[userId] = 0;
     if (typeof affection[userId] === "undefined") affection[userId] = 0;
-    if (message.channel.name === elsa.dmmChannelName) return;
-    if (!elsa.consumeBread(message)) return;
+    if (message.channel.name === myBot.dmmChannelName) return;
+    if (!myBot.consumeBread(message)) return;
 
     var now = new Date();
     var index = 0;
     if (now.valueOf() - lastTimePat[userId] < 2*60*1000) {
-        index = elsa.functionHelper.randomIntRange(0, 3);
+        index = myBot.functionHelper.randomIntRange(0, 3);
     } else {
-        index = elsa.functionHelper.randomIntRange(1, 8);
+        index = myBot.functionHelper.randomIntRange(1, 8);
     }
     var point = affection[userId] + touches[index].point;
     affection[userId] = Math.max(Math.min(point, 100), -100);
-    elsa.total_bread++;
+    myBot.total_bread++;
     
     var text = touches[index].text + "\n";
     text += "Affection: " + affection[userId] + "/100 (" + (touches[index].point>=0?"+":"") + touches[index].point + ")\n";
-    text += elsa.createRemainingBreadLine(message);
+    text += myBot.createRemainingBreadLine(message);
     
     message.reply(text);
     lastTimePat[userId] = now.valueOf();
@@ -192,7 +192,7 @@ function handleStatusCommand(message) {
 }
 
 function handleRankingCommand(message) {
-    if (elsa.preventPM(message)) return;
+    if (myBot.preventPM(message)) return;
     var result = [];
     for (key in affection) {
         result.push({
@@ -225,7 +225,7 @@ function handleRankingCommand(message) {
 }
 
 function handleMyRankingCommand(message) {
-    if (elsa.preventPM(message)) return;
+    if (myBot.preventPM(message)) return;
     var result = [];
     for (key in affection) {
         result.push({
@@ -277,7 +277,7 @@ function handleMyRankingCommand(message) {
 }
 
 function handleReduceCommand(message) {
-    if (!elsa.isAdmin(message)) return;
+    if (!myBot.isAdmin(message)) return;
     for(key in affection) {
         affection[key] = Math.floor(affection[key]/2);
     }
@@ -285,17 +285,135 @@ function handleReduceCommand(message) {
 }
 
 function handleResetCommand(message) {
-    if (!elsa.isAdmin(message)) return;
+    if (!myBot.isAdmin(message)) return;
     affection = {};
     saveAffection();
 }
 
-elsa.bot.on("message", function(message) {
-    if (message.channel.type === "text" && message.channel.name === elsa.nutakuChannelName 
-            && message.author.id != elsa.bot.user.id) {
-        elsa.hasNewMessage = true;
+myBot.greetings = dialog.elsa.greetings;
+myBot.idleTalks = dialog.elsa.idleTalks;
+myBot.commonGoodMorning = myBot.commonGoodMorning.concat(dialog.elsa.commonGoodMorning);
+myBot.commonGoodNight = myBot.commonGoodNight.concat(dialog.elsa.commonGoodNight);
+myBot.commonThanks = myBot.commonThanks.concat(dialog.elsa.commonThanks);
+
+var isLocal = true;
+isLocal = false;
+
+if (isLocal) {
+    myBot.playerData = [
+        {
+            _id: "240097185436270593",  // test-bot
+            characterId: "10650002_ae907df4",
+            exp: 2646190,//2646190,
+            gold: 0,
+            equipedWeapon: {
+                _id: "308619",
+                plus: 3
+            },
+            equipedArmor: {
+                _id: "3106140",
+                plus: 1
+            },
+            equipedAccessory: {
+                _id: "330206",
+                plus: 1
+            },
+            materialList: {},
+            weaponList: {},
+            armorList: {},
+            accessoryList: {},
+            position: "back",
+            partnerId: null,
+            isTrainer: true
+        }
+    ];
+} else {
+    myBot.playerData = [
+        {
+            _id: "241511566036434945",  // Elsa Guest
+            characterId: "10150002_765306d2",
+            promotion: 0,
+            exp: 10707880,//10707880,
+            gold: 0,
+            equipedWeapon: {
+                _id: "308119",
+                plus: 3
+            },
+            equipedArmor: {
+                _id: myBot.randomArmor(1),
+                plus: 0
+            },
+            equipedAccessory: {
+                _id: "330107",
+                plus: 3
+            },
+            materialList: {},
+            weaponList: {},
+            armorList: {},
+            accessoryList: {},
+            position: "front",
+            partnerId: null,
+            isTrainer: true
+        },{
+            _id: "269733140635975680",  // Hinano Guest
+            characterId: "10350003_fcc3ce23",
+            promotion: 0,
+            exp: 10707880,//10707880,
+            gold: 0,
+            equipedWeapon: {
+                _id: "308320",
+                plus: 3
+            },
+            equipedArmor: {
+                _id: myBot.randomArmor(3),
+                plus: 3
+            },
+            equipedAccessory: {
+                _id: "330207",
+                plus: 3
+            },
+            materialList: {},
+            weaponList: {},
+            armorList: {},
+            accessoryList: {},
+            position: "back",
+            partnerId: null,
+            isTrainer: true
+        },{
+            _id: "272259125256388610",  // Sytry Guest
+            characterId: "10850002_c4678df9",
+            promotion: 0,
+            exp: 10707880,//10707880,
+            gold: 0,
+            equipedWeapon: {
+                _id: "308819",
+                plus: 3
+            },
+            equipedArmor: {
+                _id: myBot.randomArmor(8),
+                plus: 3
+            },
+            equipedAccessory: {
+                _id: "330107",
+                plus: 3
+            },
+            materialList: {},
+            weaponList: {},
+            armorList: {},
+            accessoryList: {},
+            position: "back",
+            partnerId: null,
+            isTrainer: true
+        }
+    ];
+}
+
+myBot.bot.on("message", function(message) {
+    if (message.channel.type === "text" && message.channel.name === myBot.nutakuChannelName 
+            && message.author.id != myBot.bot.user.id) {
+        myBot.hasNewMessage = true;
     }
-    elsa.initBreadIfNeed(message.author.id);
+    myBot.initBreadIfNeed(message.author.id);
 
     var command = message.content.trim().toLowerCase();
     switch (command) {
@@ -318,147 +436,37 @@ elsa.bot.on("message", function(message) {
         handleResetCommand(message);
         break;
     default:
-        elsa.handleCommonCommand(message);
+        myBot.handleCommonCommand(message);
         break;
     }
 });
 
-elsa.greetings = dialog.elsa.greetings;
-elsa.idleTalks = dialog.elsa.idleTalks;
-elsa.commonGoodMorning = elsa.commonGoodMorning.concat(dialog.elsa.commonGoodMorning);
-elsa.commonGoodNight = elsa.commonGoodNight.concat(dialog.elsa.commonGoodNight);
-elsa.commonThanks = elsa.commonThanks.concat(dialog.elsa.commonThanks);
-
-var isLocal = true;
-isLocal = false;
-
-if (isLocal) {
-    elsa.playerData = [
-        {
-            _id: "240097185436270593",  // test-bot
-            characterId: "10150002_765306d2",
-            exp: 551340,//2646190,
-            gold: 0,
-            equipedWeapon: {
-                _id: "308119",
-                plus: 3
-            },
-            equipedArmor: {
-                _id: "3101140",
-                plus: 1
-            },
-            equipedAccessory: {
-                _id: "330206",
-                plus: 1
-            },
-            materialList: {},
-            weaponList: {},
-            armorList: {},
-            accessoryList: {},
-            position: "front",
-            partnerId: null,
-            isTrainer: true
-        },{
-            _id: "265889287281573918",  // test-bot2
-            characterId: "10750001_32935980",
-            exp: 551340,//2646190,
-            gold: 0,
-            equipedWeapon: {
-                _id: "308706",
-                plus: 3
-            },
-            equipedArmor: {
-                _id: "3107071",
-                plus: 1
-            },
-            equipedAccessory: {
-                _id: "330006",
-                plus: 1
-            },
-            materialList: {},
-            weaponList: {},
-            armorList: {},
-            accessoryList: {},
-            position: "front",
-            partnerId: null,
-            isTrainer: true
-        }
-    ];
-} else {
-    elsa.playerData = [
-        {
-            _id: "241511566036434945",
-            characterId: "10150002_765306d2",
-            exp: 551340,//2646190,
-            gold: 0,
-            equipedWeapon: {
-                _id: "308119",
-                plus: 3
-            },
-            equipedArmor: {
-                _id: "3101140",
-                plus: 1
-            },
-            equipedAccessory: {
-                _id: "330206",
-                plus: 1
-            },
-            materialList: {},
-            weaponList: {},
-            armorList: {},
-            accessoryList: {},
-            position: "front",
-            partnerId: null,
-            isTrainer: true
-        },{
-            _id: "268576286060838914",
-            characterId: "10750001_32935980",
-            exp: 551340,//2646190,
-            gold: 0,
-            equipedWeapon: {
-                _id: "308706",
-                plus: 3
-            },
-            equipedArmor: {
-                _id: "3107071",
-                plus: 1
-            },
-            equipedAccessory: {
-                _id: "330006",
-                plus: 3
-            },
-            materialList: {},
-            weaponList: {},
-            armorList: {},
-            accessoryList: {},
-            position: "front",
-            partnerId: null,
-            isTrainer: true
-        }
-    ];
-}
-
-elsa.bot.on("ready", function() {
-    if (elsa.ready()) {
+myBot.bot.on("ready", function() {
+    if (myBot.ready()) {
         loadAffection();
-        for(var i=0;i<elsa.playerData.length;i++) {
-            elsa.unitManager.createUnitForPlayer(elsa.playerData[i]);    
+        for(var i=0;i<myBot.playerData.length;i++) {
+            myBot.playerManager.createUnitForPlayer(myBot.playerData[i]);    
         }
-        trainingController.bot = elsa;
+        trainingController.bot = myBot;
+        
         if (isLocal) {
             trainingController.trainerField = [
-                ["265889287281573918", "240097185436270593", null],
-                [null, null, null]
+                //[null, "240097185436270593", "265889287281573918"],
+                [null, null, null],
+                [null, "240097185436270593", null]
             ];
         } else {
             trainingController.trainerField = [
-                ["268576286060838914", "241511566036434945", null],
-                [null, null, null]
+                [null, "241511566036434945", null],
+                [null, "269733140635975680", "272259125256388610"]
             ];    
         }
         
-        elsa.battleController = trainingController;
+        myBot.battleController = trainingController;
+        trainingController.loadSession();
     }
     
 });
-elsa.bot.login(config.elsa);
+
+myBot.token = config.elsa;
+myBot.login();

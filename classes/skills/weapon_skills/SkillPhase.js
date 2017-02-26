@@ -1,16 +1,15 @@
 var SkillPhaseConst = require('./SkillPhaseConst');
 
-function SkillPhase(pattern, skillType, modifier, attackTimes, damageType, element, targetType, state = "attack01", frame = 0, doesApproach = false, hasAnimation = false, allyOffsetX = 0, allyOffsetY = 0, enemyOffsetX = 0, enemyOffsetY = 0, opacity = 1.0) {
-    this.pattern = pattern;
+function SkillPhase(attackInstances, skillType, damageType, element, targetType, state = "attack01", frame = 0, doesApproach = false, status = {}, hasAnimation = false, allyOffsetX = 0, allyOffsetY = 0, enemyOffsetX = 0, enemyOffsetY = 0, opacity = 1.0) {
+    this.attackInstances = attackInstances;
     this.skillType = skillType;
-    this.modifier = modifier;
-    this.attackTimes = attackTimes;
     this.damageType = damageType;
     this.element = element;
     this.targetType = targetType;
     this.state = state;
     this.frame = frame;
     this.doesApproach = doesApproach;
+    this.status = status;
     this.hasAnimation = hasAnimation;
     this.allyOffsetX = allyOffsetX;
     this.allyOffsetY = allyOffsetY;
@@ -71,8 +70,8 @@ SkillPhase.prototype.useMagicalDamage = function() {
     return this.damageType === SkillPhaseConst.DAMAGE_MAGICAL;
 }
 
-SkillPhase.prototype.getPatternMask = function() {
-    return SKILL_PATTERN_MASKS[this.pattern];
+SkillPhase.prototype.getPatternMask = function(idx) {
+    return SKILL_PATTERN_MASKS[this.attackInstances[idx].pattern];
 }
 
 SkillPhase.prototype.isSelfTarget = function() {
@@ -96,8 +95,18 @@ SkillPhase.prototype.getElementFactor = function(targetElement) {
         return 1.0;
     }
     if (this.element === SkillPhaseConst.ELEMENT_WIND) {
-        if (targetElement === "earth") return 0.5;
-        if (targetElement === "wind") return 2.0;
+        if (targetElement === "earth") return 2.0;
+        if (targetElement === "wind") return 0.5;
+        return 1.0;
+    }
+    if (this.element === SkillPhaseConst.ELEMENT_DARK) {
+        if (targetElement === "dark") return 0.5;
+        if (targetElement === "light") return 2.0;
+        return 1.0;
+    }
+    if (this.element === SkillPhaseConst.ELEMENT_LIGHT) {
+        if (targetElement === "dark") return 2.0;
+        if (targetElement === "light") return 0.5;
         return 1.0;
     }
     return 1.0;

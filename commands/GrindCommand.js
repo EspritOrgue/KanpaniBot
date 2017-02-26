@@ -1,12 +1,19 @@
 var Employee = require('../classes/Employee');
 var Jimp = require("jimp");
 
+var factor = 1;
+
 module.exports = {
     runQuest: function(bot, questName, bread, user, message, timeInMillis) {
         var quest = bot.questDatabase.getQuestByName(questName);
         var userId = user.id;
         var player = bot.playerManager.getPlayer(userId);
-        var employee = bot.unitManager.getPlayerUnit(userId);
+        var employee = bot.playerManager.getPlayerUnit(userId);
+        if (!player || !employee) {
+            bot.log("Null player or employee");
+            return;
+        }            
+
         var partnerId = player.partnerId;
         
         if (quest == null) {
@@ -23,7 +30,8 @@ module.exports = {
         for(var i=0;i<quest.advantage.length;i++) {
             if (quest.advantage[i] == employee.getClassId()) chanceToSuccess = 85;
         }
-        var bonusFromLevel = employee.levelCached - quest.levelRequired;
+        var level = (employee.promotion == 0 ? employee.levelCached : 99);
+        var bonusFromLevel = level - quest.levelRequired;
         var bonusFromWeapon = 0;
         if (player.equipedWeapon) {
             var weapon = bot.weaponDatabase.getWeaponById(player.equipedWeapon._id);
@@ -64,8 +72,13 @@ module.exports = {
         }
 
         bot.grindId[userId] = setTimeout(function() {
+            var expMultiplier = (bot.runQuestStatus[userId].expMultiplier ? bot.runQuestStatus[userId].expMultiplier : 1);
+            var goldMultiplier = (bot.runQuestStatus[userId].goldMultiplier ? bot.runQuestStatus[userId].goldMultiplier : 1);
+
             bot.runQuestStatus[userId] = {
-                quest: "", endTime: -1, bread: 0
+                quest: "", endTime: -1, bread: 0,
+                expMultiplier: 1,
+                goldMultiplier: 1
             };
             bot.saveRunQuestStatus();
             bot.grindId[userId] = null;
@@ -109,8 +122,8 @@ module.exports = {
 
             var extraExp = Math.floor(quest.exp*0.1);
             // var randomExp = bot.functionHelper.randomInt(extraExp + 1);
-            var expGained = Math.floor((isSuccess ? quest.exp : 0) * modifier);
-            var goldGained = Math.floor((isSuccess ? quest.goldReward : 0) * modifier);
+            var expGained = Math.floor((isSuccess ? quest.exp : 0) * modifier * expMultiplier) * factor;
+            var goldGained = Math.floor((isSuccess ? quest.goldReward : 0) * modifier * goldMultiplier);
             var breadGained = (isSuccess ? quest.breadReward : 0);
             var bonusExp = Math.floor(expGained * 0.3);
             text += "EXP gained: **" + expGained + "**" + (partnerId?" (+" + bonusExp + ")":"") + "\n";
@@ -121,7 +134,7 @@ module.exports = {
 
             var drop = {};
             if (isSuccess) {
-                var numDrop = Math.floor(quest.numItemDrop * modifier);
+                var numDrop = Math.floor(quest.numItemDrop * modifier) * factor;
                 for(var i=0;i<numDrop;i++) {
                     var itemName = bot.functionHelper.randomObject(quest.dropList);
                     if (typeof drop[itemName] === "undefined") drop[itemName] = 0;
@@ -130,13 +143,13 @@ module.exports = {
             }
             
             var player = bot.playerManager.getPlayer(userId);
-            var employee = bot.unitManager.getPlayerUnit(userId);
+            var employee = bot.playerManager.getPlayerUnit(userId);
             var preLevel = employee.levelCached;
             player.exp += expGained;
             employee.addExp(expGained);
     
             var partner = bot.playerManager.getPlayer(partnerId);
-            var partnerEmployee = bot.unitManager.getPlayerUnit(partnerId);
+            var partnerEmployee = bot.playerManager.getPlayerUnit(partnerId);
 
             if (partnerId) {
                 var partnerPreLevel = partnerEmployee.levelCached;
@@ -166,6 +179,7 @@ module.exports = {
 
             if (bot.remainingBread[userId] < bot.cappedBread) {
                 bot.remainingBread[userId] = Math.min(bot.remainingBread[userId] + breadGained, bot.cappedBread);    
+                bot.saveBread();
             }
             
 
@@ -263,6 +277,7 @@ module.exports = {
         if (!text.startsWith("~grind ") && !text.startsWith("~fullgrind ")) return;
         if (message.channel.name === bot.dmmChannelName || message.channel.name === bot.nutakuChannelName) return;
 
+        var userId = message.author.id;
         var isFullGrind = text.startsWith("~fullgrind ");
         var questName = text.substring(7 + (isFullGrind?4:0)).trim().toLowerCase();
         var quest = bot.questDatabase.getQuestByName(questName);
@@ -275,26 +290,34 @@ module.exports = {
             return;
         }
 
-        if (isFullGrind && quest.name === "Phantom Labyrinth") {
-            message.reply("You cannot use Full Grind for Phantom Labyrinth.");
+        if (quest.itemRequired) {
+            if (!bot.expTicketEffect[userId] || bot.expTicketEffect[userId].itemName != quest.itemRequired) {
+                message.reply("You need to use **" + quest.itemRequired + "** to grind this quest.");
+                return;
+            }
+        }        
+
+        if (isFullGrind && (quest.name === "Phantom Labyrinth" || quest.name === "EXP Palace")) {
+            message.reply("You cannot use Full Grind for " + quest.name + ".");
             return;
         }
 
-        var userId = message.author.id;
         var player = bot.playerManager.getPlayer(userId);
         if (player == null) {
             message.reply("You haven't selected your character.");
             return;
         }
-        var employee = bot.unitManager.getPlayerUnit(userId);
-        if (employee.levelCached < quest.levelRequired) {
+        var employee = bot.playerManager.getPlayerUnit(userId);
+        if (employee.promotion == 0 && employee.levelCached < quest.levelRequired) {
             message.reply("Your level (**Lv." + employee.levelCached + "**) is too low for this quest. The minimum is **Lv." + quest.levelRequired + "**.");
             return;
         }
 
         if (typeof bot.runQuestStatus[userId] === "undefined") {
             bot.runQuestStatus[userId] = {
-                quest: "", endTime: -1, bread: 0
+                quest: "", endTime: -1, bread: 0,
+                goldMultiplier: 1,
+                expMultiplier: 1
             };
         }
 
@@ -304,6 +327,11 @@ module.exports = {
             var remainingTime = bot.runQuestStatus[userId].endTime - now.valueOf();
             var time = bot.functionHelper.parseTime(remainingTime);
             message.reply("You are running quest " + bot.runQuestStatus[userId].quest + ". It will end in **" + time + "**");
+            return;
+        }
+
+        if (bot.remainingBread[userId] < quest.breadCost) {
+            message.reply("You don't have enough bread to run this quest.");
             return;
         }
 
@@ -328,6 +356,15 @@ module.exports = {
         bot.runQuestStatus[userId].quest = quest.commonNames[0];
         bot.runQuestStatus[userId].endTime = now.valueOf() + timeCost * 1000;
         bot.runQuestStatus[userId].bread = breadNeeded;
+
+        if (bot.grindEffect[userId] && bot.grindEffect[userId].itemName != "") {
+            if (bot.grindEffect[userId].itemName == "Chocolate Chip Ice" 
+                && quest.name.startsWith("Valentine's Day Limited Quest")) {
+
+                bot.runQuestStatus[userId].expMultiplier = 2;
+            }
+        }
+
         bot.saveRunQuestStatus();
         // bot.log(message.author.username + " " + text + " " + (new Date()));
 

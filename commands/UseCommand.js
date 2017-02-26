@@ -53,11 +53,35 @@ function isAromaOil(itemName) {
     return contains(itemListList, itemName);
 }
 
+function isCacao(itemName) {
+    var itemListList = [
+        "Magical Cacao"
+    ];
+    return contains(itemListList, itemName);
+}
+
+function isIceCream(itemName) {
+    var itemListList = [
+        "Chocolate Chip Ice"
+    ];
+    return contains(itemListList, itemName);
+}
+
+function isExpTicket(itemName) {
+    var itemListList = [
+        "EXP Palace Invitation"
+    ];
+    return contains(itemListList, itemName);
+}
+
 function isUsable(itemName) {
     return isMailbox(itemName) 
         || isHammer(itemName) 
         || isForge(itemName) 
-        || isBread(itemName);
+        || isBread(itemName)
+        || isIceCream(itemName)
+        || isCacao(itemName)
+        || isExpTicket(itemName);
         // || isEldLight(itemName) 
         // || isAromaOil(itemName);
 }
@@ -350,6 +374,7 @@ module.exports = {
             bot.remainingBread[userId] += amount * extraBreadPerItem;
             bot.playerManager.spendItem(userId, materialInfo.itemName, amount);
             bot.savePlayer();
+            bot.saveBread();
             message.reply(bot.createRemainingBreadLine(message));
         } else if (isEldLight(itemName)) {
             if (!bot.isPM(message)) {
@@ -507,6 +532,90 @@ module.exports = {
             bot.saveAroma();
             message.channel.sendFile("images/misc/aroma.png", "png", text);
             
+        } else if (isIceCream(itemName)) {
+            if (isUsingAll) {
+                message.reply("You can only use this item one by one.");
+                return;
+            }
+
+            if (typeof bot.grindEffect[userId] === "undefined") {
+                bot.grindEffect[userId] = {
+                    itemName: "",
+                    endTime: 0
+                }
+            }
+            var now = new Date();
+            if (bot.grindEffect[userId].itemName != "") {
+                var remainingTime = bot.grindEffect[userId].endTime - now.valueOf();
+                var time = bot.functionHelper.parseTime(remainingTime);
+                message.reply("You have already been under effect of another Ice Cream! It will end in **" + time + "**");
+                return;
+            }
+            var effectDuration = 3*60*60*1000;    // 3 hours
+            bot.grindEffect[userId].itemName = materialInfo.itemName;
+            bot.grindEffect[userId].endTime = now.valueOf() + effectDuration;
+
+            setTimeout(function() {
+                bot.grindEffect[userId] = {
+                    itemName: "",
+                    endTime: 0
+                }
+                message.author.sendMessage("The effect of **" + materialInfo.itemName + "** has faded away.");
+            }, effectDuration);
+
+            bot.playerManager.spendItem(userId, materialInfo.itemName);
+            bot.savePlayer();
+            message.reply("You have used **" + materialInfo.itemName + "**. Its effect will last for 3 hours.");
+        } else if (isCacao(itemName)) {
+            var amount = 1;
+            if (isUsingAll) {
+                amount = player.materialList[materialInfo.itemName];
+            }
+
+            bot.kettle.totalCacao += amount;
+            if (typeof bot.kettle.contribution[userId] === "undefined") {
+                bot.kettle.contribution[userId] = 0;
+            }
+            bot.kettle.contribution[userId] += amount;
+
+            bot.playerManager.spendItem(userId, materialInfo.itemName, amount);
+            bot.savePlayer();
+            bot.saveKettle();
+            message.reply("You have contributed **" + amount + " " + materialInfo.itemName + "** to the Alchemy Kettle.");
+        } else if (isExpTicket(itemName)) {
+            if (isUsingAll) {
+                message.reply("You can only use this item one by one.");
+                return;
+            }
+
+            if (typeof bot.expTicketEffect[userId] === "undefined") {
+                bot.expTicketEffect[userId] = {
+                    itemName: "",
+                    endTime: 0
+                }
+            }
+            var now = new Date();
+            if (bot.expTicketEffect[userId].itemName != "") {
+                var remainingTime = bot.expTicketEffect[userId].endTime - now.valueOf();
+                var time = bot.functionHelper.parseTime(remainingTime);
+                message.reply("You have already been under the effect of another Invitation Ticket! It will end in **" + time + "**");
+                return;
+            }
+            var effectDuration = 15*60*1000;    // 15 minutes
+            bot.expTicketEffect[userId].itemName = materialInfo.itemName;
+            bot.expTicketEffect[userId].endTime = now.valueOf() + effectDuration;
+
+            setTimeout(function() {
+                bot.expTicketEffect[userId] = {
+                    itemName: "",
+                    endTime: 0
+                }
+                message.author.sendMessage("The effect of **" + materialInfo.itemName + "** has faded away.");
+            }, effectDuration);
+
+            bot.playerManager.spendItem(userId, materialInfo.itemName);
+            bot.savePlayer();
+            message.reply("You have used **" + materialInfo.itemName + "**. You can access to **EXP Palace** now by using command `~grind exp-palace`.\nIts effect will last for 15 minutes.");
         }
     }
 }

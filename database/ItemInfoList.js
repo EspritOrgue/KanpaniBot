@@ -128,7 +128,7 @@ var itemInfos = [
     },{
         _id: "70006105_1", itemName: "Holy Water", price: 1000
     },{
-        _id: "70006106_1", itemName: "Beautiful Demonic Water", price: 1000
+        _id: "70006106_1", itemName: "Demonic Violet Water", price: 1000
     },{
         _id: "70006107_1", itemName: "Shining Spirit Water", price: 750
     },
@@ -205,7 +205,29 @@ var itemInfos = [
 
     {
         _id: "40074501_1", itemName: "Aroma Oil", price: 50
+    },
+
+    {
+        _id: "14001101_1", itemName: "Chocolate Bar", price: 50
+    },{
+        _id: "14001102_1", itemName: "Nuts", price: 50
+    },{
+        _id: "14001103_1", itemName: "Fruit", price: 50
+    },{
+        _id: "40069003_1", itemName: "Chocolate Chip Ice", price: 0
     }
+
+    ,{
+        _id: "40088001_1", itemName: "Magical Cacao", price: 50
+    }
+
+    ,{
+        _id: "91000101_1", itemName: "Promotion Badge", price: 0
+    },{
+        _id: "50000103_1", itemName: "EXP Palace Invitation", price: 0
+    }
+
+
 
 ];
 

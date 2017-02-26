@@ -98,6 +98,11 @@ module.exports = {
         var command = bot.functionHelper.parseCommand(message);
         if (command.commandName !== "~setauction") return;
 
+        if (!bot.isPM(message) && message.channel.name != 'market') {
+            message.reply('You can only set a new auction either in PM or in Market channel.');
+            return;
+        }
+
         var userId = message.author.id;
         if (!bot.auctionManager.canSetAuction(userId)) {
             message.reply("You cannot set a new auction now.");
@@ -129,8 +134,8 @@ module.exports = {
             message.reply("The starting price must be at least 1 Gold.");
             return;   
         }
-        if (startingPrice > 10000000) {
-            message.reply("The starting price must be at most 10,000,000 Gold.");
+        if (startingPrice > 100000000) {
+            message.reply("The starting price must be at most 100,000,000 Gold.");
             return;   
         }
 
