@@ -1,7 +1,9 @@
 module.exports = {
+    names: ['xmastree'],
     handle: function(message, bot) {
         var command = bot.functionHelper.parseCommand(message);
-        if (command.commandName != "~xmastree") return;
+        if (!command.isCommand(this.names)) return;
+        
         var total = 0;
         for(key in bot.christmasTreeContribution) {
             total += bot.christmasTreeContribution[key];
@@ -47,6 +49,6 @@ module.exports = {
             text += (i+1) + ". " + result[i].username + " (" + result[i].contribution + ")\n";
         }
 
-        message.channel.sendFile(xmasTreeImageFileName, "png", text);
+        message.channel.send(text,{'files':[xmasTreeImageFileName]});
     }
 }

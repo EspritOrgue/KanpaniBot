@@ -1,7 +1,8 @@
 module.exports = {
+    names: ['bid'],
     handle: function(message, bot) {
         var command = bot.functionHelper.parseCommand(message);
-        if (command.commandName != "~bid") return;
+        if (!command.isCommand(this.names)) return;
 
         if (!bot.isPM(message) && message.channel.name != 'market') {
             message.reply('You can only bid either in PM or in Market channel.');
@@ -70,14 +71,14 @@ module.exports = {
             if (previousHighestBidder != auction.highestBidderBeforeClosed) {
                 var previousHighestBidderUser = bot.userManager.getUser(previousHighestBidder);
                 if (previousHighestBidderUser) {
-                    previousHighestBidderUser.sendMessage("Someone placed higher bid than yours in Auction " + bidId + "!");
+                    previousHighestBidderUser.send("Someone placed higher bid than yours in Auction " + bidId + "!");
                 }
             }
         }
 
         auction.timestamp[userId] = now.valueOf();
         if (user) {
-            user.sendMessage("You have placed a bid successfully in Auction "+ bidId + ".");
+            user.send("You have placed a bid successfully in Auction "+ bidId + ".");
         }
         bot.savePlayer();
         bot.saveAuction();

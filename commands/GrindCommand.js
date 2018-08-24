@@ -168,7 +168,7 @@ module.exports = {
                             bot.userManager.announceLevel(partnerId, partnerEmployee.levelCached);
                         }, 5000);
                     }
-                    partnerUser.sendMessage(partnerText);
+                    partnerUser.send(partnerText);
                 }
             }
 
@@ -177,12 +177,12 @@ module.exports = {
             player.gold += goldGained;
             bot.initBreadIfNeed(userId);
 
-            if (bot.remainingBread[userId] < bot.cappedBread) {
-                bot.remainingBread[userId] = Math.min(bot.remainingBread[userId] + breadGained, bot.cappedBread);    
+            if (bot.breadManager.isBreadUnderCap(userId)) {
+                var newBreadAmount = Math.min(bot.breadManager.addBread(userId, breadGained), bot.breadManager.cappedBread);
+                bot.breadManager.setBread(userId, newBreadAmount);
                 bot.saveBread();
             }
             
-
             var itemNameList = [];
             for(key in drop) {
                 var itemName = key;
@@ -193,7 +193,6 @@ module.exports = {
             bot.savePlayer();
 
             var itemInfoList = bot.itemInfoDatabase.getItemInfosByNames(itemNameList);
-            
             var queue = [];
             var itemFileNameList = [];
             for(var i=0;i<itemInfoList.length;i++) {
@@ -207,10 +206,10 @@ module.exports = {
 
             bot.imageHelper.download(queue, function(err) {
                 if (err) {
-                    user.sendMessage(text + backupItemDropText);
+                    user.send(text + backupItemDropText);
                     if (isLevelUp) {
                         setTimeout(function() {
-                            user.sendMessage(levelUpText);
+                            user.send(levelUpText);
                         }, 5*1000);
                     }
                     return;
@@ -220,10 +219,10 @@ module.exports = {
                     for(key in imageDict) imageList.push(imageDict[key]);
 
                     if (err || imageList.length == 0) {
-                        user.sendMessage(text + backupItemDropText);
+                        user.send(text + backupItemDropText);
                         if (isLevelUp) {
                             setTimeout(function() {
-                                user.sendMessage(levelUpText);
+                                user.send(levelUpText);
                             }, 5*1000);
                         }
                         return;
@@ -247,7 +246,7 @@ module.exports = {
                             }
                             var imageName = "images/inventory/" + userId + ".png";
                             image.write(imageName, function() {
-                                user.sendFile(imageName, "png", text);
+                                user.send(text, { files: [imageName]});
                                 if (isLevelUp) {
                                     setTimeout(function() {
                                         bot.userManager.announceLevel(userId, employee.levelCached);
@@ -258,28 +257,27 @@ module.exports = {
                     });
                 });
             });
-            // if (userId && quest) {
-            //     var thisUser = bot.userManager.getUser(userId);
-            //     if (thisUser) {
-            //         bot.log(thisUser.username + " " + quest.commonNames[0] + " finished " + (new Date()));        
-            //     } else {
-            //         bot.log("User of " + userId + " is null.");   
-            //     }
-                
-            // }
             
         }, timeInMillis);
 
     },
 
+    names: ['grind', 'fullgrind', 'fg'],
+    usage: '`~grind quest_code`\n`quest_code` can be `1-1`, `2-3`, `2-3-1` and so on.',
+    description: 'run a specific quest. (PM and #offtopic_general only)', 
     handle: function(message, bot) {
-        var text = message.content.trim().toLowerCase();
-        if (!text.startsWith("~grind ") && !text.startsWith("~fullgrind ")) return;
-        if (message.channel.name === bot.dmmChannelName || message.channel.name === bot.nutakuChannelName) return;
+        var command = bot.functionHelper.parseCommand(message);
+        if (!command.isCommand(this.names)) return;
+        if (message.channel.name === bot.dmmChannelName || message.channel.name === bot.mainChannelName) return;
+
+        if (!command.args[0]) {
+            message.reply("Wrong usage!\n" + this.usage);
+            return;
+        }
 
         var userId = message.author.id;
-        var isFullGrind = text.startsWith("~fullgrind ");
-        var questName = text.substring(7 + (isFullGrind?4:0)).trim().toLowerCase();
+        var isFullGrind = (command.name == 'fullgrind') || (command.name == 'fg');
+        var questName = command.args[0].trim().toLowerCase();
         var quest = bot.questDatabase.getQuestByName(questName);
         if (quest == null) {
             message.reply("No information.");
@@ -330,14 +328,14 @@ module.exports = {
             return;
         }
 
-        if (bot.remainingBread[userId] < quest.breadCost) {
+        if (bot.breadManager.getBread(userId) < quest.breadCost) {
             message.reply("You don't have enough bread to run this quest.");
             return;
         }
 
         var modifier = 1;
         if (isFullGrind && quest.breadCost != 0) {
-            modifier = bot.remainingBread[userId] / quest.breadCost;
+            modifier = bot.breadManager.getBread(userId) / quest.breadCost;
         }
 
         var goldNeeded = Math.floor(quest.goldCost * modifier);
@@ -366,8 +364,6 @@ module.exports = {
         }
 
         bot.saveRunQuestStatus();
-        // bot.log(message.author.username + " " + text + " " + (new Date()));
-
         this.runQuest(bot, questName, breadNeeded, message.author, message, timeCost * 1000);
     }
 }

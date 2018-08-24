@@ -2,6 +2,7 @@ var BattleField = require('../classes/BattleField');
 var BattlePainter = require('./BattlePainter');
 var Jimp = require("jimp");
 var fs = require('fs');
+var SkillPhaseConst = require('../classes/skills/weapon_skills/SkillPhaseConst')
 
 function TrainingController() {
     this.type = "training";
@@ -40,7 +41,14 @@ TrainingController.prototype.loadSession = function() {
             that.bot.log(err);
             return;
         }
-        that.trainingSession = JSON.parse(data);
+        try {
+            that.trainingSession = JSON.parse(data);
+        } catch (err) {
+            data = data.slice(0, data.lastIndexOf('}'));
+            data = data.slice(0, data.lastIndexOf('}')+1);
+            that.trainingSession = JSON.parse(data);
+        }
+        
         for(key in that.trainingSession.trainerHP) {
             var trainerId = key;
             var trainerHP = that.trainingSession.trainerHP[key];
@@ -65,7 +73,6 @@ TrainingController.prototype.loadSession = function() {
     });
 }
 
-
 TrainingController.prototype.saveSession = function(callback) {
     for(var i=0;i<2;i++) {
         for(var j=0;j<3;j++) {
@@ -87,13 +94,18 @@ TrainingController.prototype.saveSession = function(callback) {
     }); 
 }
 
-TrainingController.prototype.setEndTimer = function(duration) {
+TrainingController.prototype.getNumTrainer = function(duration) {
     var numTrainer = 0;
     for(var i=0;i<2;i++) {
         for(var j=0;j<3;j++) {
             if (this.trainerField[i][j]) numTrainer++;
         }
     }
+    return numTrainer;
+}
+
+TrainingController.prototype.setEndTimer = function(duration) {
+    var numTrainer = this.getNumTrainer();
     if (typeof duration == "undefined") {
         duration = numTrainer * 60 * 60 * 1000;
     }
@@ -131,7 +143,7 @@ TrainingController.prototype.setRespawnTimer = function(duration) {
         }
 
         var traineeRole = that.bot.battleChannel.guild.roles.find('name', 'Trainee');
-        that.bot.battleChannel.sendMessage(traineeRole + " All Trainers are ready for new battle.");
+        that.bot.battleChannel.send(traineeRole + " All Trainers are ready for new battle.");
         that.setEndTimer();
     }, duration);
 }
@@ -162,11 +174,12 @@ TrainingController.prototype.endBattle = function(endBattleByTimeout) {
     this.setRespawnTimer();
 
     var endBattleFactor = (endBattleByTimeout ? 0.5 : 1.0);
-    var expReward = Math.floor((EXP_REWARD + this.bot.functionHelper.randomInt(Math.floor(EXP_REWARD*0.1))) * endBattleFactor);
+    var expReward = EXP_REWARD * this.getNumTrainer();
+    expReward = Math.floor((expReward + this.bot.functionHelper.randomInt(Math.floor(expReward*0.1))) * endBattleFactor);
     for(key in this.trainingSession.contribution) {
         var userId = key;
         if (this.trainingSession.contribution[userId] > 0) {
-            var itemAmount = Math.floor(this.trainingSession.contribution[userId] * 5 * factor * endBattleFactor);
+            var itemAmount = Math.floor(this.trainingSession.contribution[userId] * 10 * factor * endBattleFactor);
             this.trainingSession.contribution[userId] = 0;
             var itemReceived = {};
             for(var i=0;i<itemAmount;i++) {
@@ -183,7 +196,7 @@ TrainingController.prototype.endBattle = function(endBattleByTimeout) {
             this.bot.playerManager.addExp(userId, expReward);
             var user = this.bot.userManager.getUser(userId);
             if (user) {
-                user.sendMessage(text);
+                user.send(text);
             }
             this.bot.playerManager.refreshUnitForPlayerId(userId);
         }
@@ -227,7 +240,7 @@ var rewardList = [
 ];
 
 var factor = 1;
-var EXP_REWARD = 48216 * factor;
+var EXP_REWARD = 16216 * factor;
 
 TrainingController.prototype.didPlayerDie = function(playerId) {
     var unit = this.bot.playerManager.getPlayerUnit(playerId);
@@ -434,27 +447,21 @@ TrainingController.prototype.attackRecursively = function(skill, attacker, targe
         return; 
     }
 
-    var average_column = 0;
-    for(var i=0;i<area.length;i++) average_column += area[i].column;
-    average_column = average_column / area.length;
-
-    var expGained = {};
-
-    var painter = new BattlePainter(this.bot);
-    if (skillPhase.hasAnimation) {
-        painter.skillNameToAnimate = skill.name + "_" + (actionOnEnemySide?"ally":"enemy") + "_" + iter;
-        painter.offsetX = (actionOnEnemySide ? skillPhase.allyOffsetX : skillPhase.enemyOffsetX);
-        painter.offsetY = (actionOnEnemySide ? skillPhase.allyOffsetY : skillPhase.enemyOffsetY);
-        painter.opacity = skillPhase.opacity;
-        if (actionOnEnemySide) {
-            painter.focusPointRow = 1 - area[area.length-1].row;
-            painter.focusPointColumn = 2 - area[area.length-1].column;
-        } else {
-            painter.focusPointRow = area[0].row + 4;
-            painter.focusPointColumn = area[0].column;
-        }
+    var maxColumn = 0;
+    var minColumn = 1000;
+    var maxRow = 0;
+    var minRow = 1000;
+    for(var i=0;i<area.length;i++) {
+        maxColumn = Math.max(maxColumn, area[i].column);
+        minColumn = Math.min(minColumn, area[i].column);
+        maxRow = Math.max(maxRow, area[i].row);
+        minRow = Math.min(minRow, area[i].row);
     }
-
+    var average_column  = (maxColumn + minColumn)/2;
+    var average_row     = (maxRow + minRow)/2;
+    
+    var painter = new BattlePainter(this.bot, skill, iter, actionOnEnemySide, area);
+    var expGained = {};
     var isKOed = {};
 
     text += attackerName + " used **" + skill.name + "**\n";
@@ -478,12 +485,15 @@ TrainingController.prototype.attackRecursively = function(skill, attacker, targe
 
     var doesHitMainTarget = false;
 
-    var focusModifier       = (attacker.status["Focus"] ? attacker.status["Focus"].power / 100 : 1.0);
-    var darknessModifier    = (attacker.status["Darkness"] ? 0.15 : 1);
+    var darknessModifier    = (attacker.status["Darkness"]  ? 0.15 : 1);
     var encourageModifier   = (attacker.status["Encourage"] ? 2.0 : 1.0);
+    var focusModifier       = (attacker.status["Focus"]     ? 2.5 : 1.0);
     var patkDownModifier    = (attacker.status["Patk Down"] ? 0.5 : 1.0);
     var matkDownModifier    = (attacker.status["Matk Down"] ? 0.5 : 1.0);
     
+    if (attacker.status["Encourage"]) attacker.status["Encourage"].destroy();
+    if (attacker.status["Focus"]) attacker.status["Focus"].destroy();
+
     // Damage calculation
     for(var k=0;k<skillPhase.attackInstances.length;k++) {
         var skillModifier = skillPhase.attackInstances[k].modifier;
@@ -528,7 +538,7 @@ TrainingController.prototype.attackRecursively = function(skill, attacker, targe
 
                 var hitValue = (attacker.getHit() + attacker.getDEX()*0.65) * darknessModifier;
                 var evadeValue = targetUnit.getEva() + targetUnit.getAGI()*0.20;
-                var hitRate = Math.floor(60 + (hitValue - evadeValue)*0.2);
+                var hitRate = Math.floor(70 + (hitValue - evadeValue)*0.2);
                 hitRate = Math.max(10, hitRate);
                 hitRate = Math.min(99, hitRate);
                 if (skillPhase.isSpellAttack()) hitRate = 100;
@@ -747,9 +757,11 @@ TrainingController.prototype.attackRecursively = function(skill, attacker, targe
             var enemyUnit = this.bot.playerManager.getPlayerUnit(battleField.enemySide[i][j]);
             if (enemyUnit && enemyUnit.getCurrentHP() > 0) {
                 if (enemyUnit === attacker) {
-                    painter.setEnemyState(i, j, enemyUnit, skillPhase.state, skillPhase.frame);
-                    if (skillPhase.doesApproach) {
+                    painter.setEnemyState(i, j, enemyUnit, skillPhase.animation.state, skillPhase.animation.frame);
+                    if (skillPhase.animation.approachType == SkillPhaseConst.APPROACH_FRONT) {
                         painter.moveToFrontOfAllyField(i, j, average_column);
+                    } else if (skillPhase.animation.approachType == SkillPhaseConst.APPROACH_CENTER) {
+                        painter.moveToFrontOfAllyField(i, j, average_column, average_row);
                     }
                 } else {
                     painter.setEnemyState(i, j, enemyUnit);
@@ -758,9 +770,11 @@ TrainingController.prototype.attackRecursively = function(skill, attacker, targe
             var allyUnit = this.bot.playerManager.getPlayerUnit(battleField.allySide[i][j]);
             if (allyUnit && !allyUnit.isFainted()) {
                 if (allyUnit === attacker) {
-                    painter.setAllyState(i, j, allyUnit, skillPhase.state, skillPhase.frame);
-                    if (skillPhase.doesApproach) {
+                    painter.setAllyState(i, j, allyUnit, skillPhase.animation.state, skillPhase.animation.frame);
+                    if (skillPhase.animation.approachType == SkillPhaseConst.APPROACH_FRONT) {
                         painter.moveToFrontOfEnemyField(i, j, average_column);
+                    } else if (skillPhase.animation.approachType == SkillPhaseConst.APPROACH_CENTER) {
+                        painter.moveToFrontOfEnemyField(i, j, average_column, average_row);
                     }
                 } else {
                     painter.setAllyState(i, j, allyUnit);
@@ -979,6 +993,132 @@ TrainingController.prototype.randomTrainer = function() {
     return null;
 }
 
+TrainingController.prototype.executeBattle = function(turnQueue, iter, battleField, koResult, resultText, imageList, callback) {
+    if (iter >= turnQueue.length) {
+        var userId = turnQueue[0].attacker.playerId;
+        if (imageList && imageList.length > 0) {
+            image = new Jimp(950, 590 * imageList.length, 0xFFFFFF00, function (err, image) {
+                for(var i=0;i<imageList.length;i++) {
+                    image.composite(imageList[i], 0, 590 * i);
+                }
+                var imageName = "images/battle/" + userId + ".png";
+                image.write(imageName, function() {
+                    callback(resultText, imageName);
+                });
+            });    
+        } else {
+            callback(resultText, null);
+        }
+        return;
+    }
+    var turn = turnQueue[iter];
+    var that = this;
+    if (turn && turn.attacker && !turn.attacker.isFainted()) {
+        this.attackRecursively(turn.skill, turn.attacker, turn.targetUnitList, battleField, 0, turn.result, koResult, function() {
+            for(var i=0;i<turn.result.length;i++) {
+                resultText += "=======" + turn.side + "'S PHASE " + (i+1) + "=======\n";
+                resultText += turn.result[i].text + "\n";
+            }
+            for(var i=0;i<turn.result.length;i++) {
+                if (turn.result[i].image) imageList.push(turn.result[i].image);
+            }
+            turn.result = [];
+            if (turn.attacker.status["Darkness"]) turn.attacker.status["Darkness"].evoke();
+            if (turn.attacker.status["Focus"]) turn.attacker.status["Focus"].destroy();
+
+            that.executeBattle(turnQueue, iter+1, battleField, koResult, resultText, imageList, callback);
+        });    
+    } else {
+        that.executeBattle(turnQueue, iter+1, battleField, koResult, resultText, imageList, callback);
+    }
+}
+
+TrainingController.prototype.attemptToEncourage = function(unit, field) {
+    if (unit.getClassId() != 5) return;
+    var now = new Date();
+    if (now.valueOf() < unit.classSkillCooldownEndTime) return;
+    if (this.bot.functionHelper.randomInt(100) >= 30) return;
+
+    var COOLDOWN = 30*60*1000;
+    unit.classSkillCooldownEndTime = now.valueOf() + COOLDOWN;
+
+    var name = unit.shortName;
+    var user = this.bot.userManager.getUser(unit.playerId);
+    if (user) name += " (" + user.username + ")";
+    
+    var text = name + " used Encourage.\n";
+    for(var i=0;i<2;i++) {
+        for(var j=0;j<3;j++) {
+            var fieldUnit = this.bot.playerManager.getPlayerUnit(field[i][j]);
+            if (fieldUnit && !fieldUnit.isFainted()) {
+                var fieldUser = this.bot.userManager.getUser(field[i][j]);
+                name = fieldUnit.shortName;
+                if (fieldUser) name += " (" + fieldUser.username + ")";
+                text += "\t" + name + " is under Encourage's effect.\n";
+
+                this.bot.playerManager.applyEncourage(unit.playerId, field[i][j]);
+            }
+        }
+    }
+    this.bot.battleChannel.send(text);
+}
+
+TrainingController.prototype.attemptToSneak = function(unit, field) {
+    if (unit.getClassId() != 7) return;
+    var now = new Date();
+    if (now.valueOf() < unit.classSkillCooldownEndTime) return;
+    if (this.bot.functionHelper.randomInt(100) >= 30) return;
+
+    var COOLDOWN = 15*60*1000;
+    unit.classSkillCooldownEndTime = now.valueOf() + COOLDOWN;
+
+    var name = unit.shortName;
+    var user = this.bot.userManager.getUser(unit.playerId);
+    if (user) name += " (" + user.username + ")";
+    
+    var text = name + " used Sneak Attack.\n";
+    for(var i=0;i<2;i++) {
+        for(var j=0;j<3;j++) {
+            var fieldUnit = this.bot.playerManager.getPlayerUnit(field[i][j]);
+            if (fieldUnit && !fieldUnit.isFainted()) {
+                var fieldUser = this.bot.userManager.getUser(field[i][j]);
+                name = fieldUnit.shortName;
+                if (fieldUser) name += " (" + fieldUser.username + ")";
+                text += "\t" + name + " is under Sneak Attack's effect.\n";
+
+                this.bot.playerManager.applySneak(unit.playerId, field[i][j]);
+            }
+        }
+    }
+    this.bot.battleChannel.send(text);
+}
+
+TrainingController.prototype.attemptToFocus = function(unit) {
+    if (unit.getClassId() != 8) return;
+    var now = new Date();
+    if (now.valueOf() < unit.classSkillCooldownEndTime) return;
+    if (this.bot.functionHelper.randomInt(100) >= 30) return;
+
+    var COOLDOWN = 30*60*1000;
+    unit.classSkillCooldownEndTime = now.valueOf() + COOLDOWN;
+    var name = unit.shortName;
+    var user = this.bot.userManager.getUser(unit.playerId);
+    if (user) name += " (" + user.username + ")";
+    
+    var text = name + " used Focus.\n";
+    this.bot.playerManager.applyFocus(unit.playerId, unit.playerId);
+    this.bot.battleChannel.send(text);
+}
+
+
+TrainingController.prototype.addContribution = function(playerId) {
+    if (typeof this.trainingSession.contribution[playerId] === "undefined") {
+        this.trainingSession.contribution[playerId] = 0;
+    }
+    this.trainingSession.contribution[playerId]++;
+    this.saveSession();
+}
+
 TrainingController.prototype.attack = function(attacker, targetUnitList, callback) {
     var skillName = attacker.getCurrentSkill();
     if (!skillName) {
@@ -1033,13 +1173,8 @@ TrainingController.prototype.attack = function(attacker, targetUnitList, callbac
         }
     };
 
-    var cooldownTime = skill.cooldown * 60 * 1000;
-    if (attacker.status["Sneak"]) {
-        cooldownTime *= 0.5;
-        attacker.status["Sneak"].destroy();
-    }
-    attacker.cooldownEndTime = now.valueOf() + Math.floor(cooldownTime);
-    
+    this.addContribution(attacker.playerId);
+
     var result1 = [];
     var result2 = [];
     var koResult = [];
@@ -1049,12 +1184,17 @@ TrainingController.prototype.attack = function(attacker, targetUnitList, callbac
     battleField.enemySide = this.trainerField;
     battleField.allySide = this.randomField(attacker.playerId, secondaryPlayerIdOnTheField);
 
-    if (typeof that.trainingSession.contribution[attacker.playerId] === "undefined") {
-        that.trainingSession.contribution[attacker.playerId] = 0;
-    }
-    that.trainingSession.contribution[attacker.playerId]++;
-    this.saveSession();
+    this.attemptToEncourage(attacker, battleField.allySide);
+    this.attemptToFocus(attacker);
+    this.attemptToSneak(attacker, battleField.allySide);
 
+    var cooldownTime = skill.cooldown * 60 * 1000;
+    if (attacker.status["Sneak"]) {
+        cooldownTime *= 0.5;
+        attacker.status["Sneak"].destroy();
+    }
+    attacker.cooldownEndTime = now.valueOf() + Math.floor(cooldownTime);
+    
     var playerTurn = {
         side: "PLAYER",
         skill: skill,
@@ -1105,7 +1245,17 @@ TrainingController.prototype.attack = function(attacker, targetUnitList, callbac
                 trainerTargetList.push(attacker);
             }
         }
-        trainerToAttack.cooldownEndTime = now.valueOf() + Math.floor(trainerSkill.cooldown * 60 * 1000 / 2);
+
+        this.attemptToEncourage(trainerToAttack, battleField.enemySide);
+        this.attemptToFocus(trainerToAttack, battleField.enemySide);
+        this.attemptToSneak(trainerToAttack, battleField.enemySide);
+
+        var trainerCooldownTime = trainerSkill.cooldown * 60 * 1000;
+        if (trainerToAttack.status["Sneak"]) {
+            trainerCooldownTime *= 0.5;
+            trainerToAttack.status["Sneak"].destroy();
+        }
+        trainerToAttack.cooldownEndTime = now.valueOf() + Math.floor(trainerCooldownTime / 2);
         trainerTurn = {
             side: "TRAINER",
             skill: trainerSkill,
@@ -1153,46 +1303,6 @@ TrainingController.prototype.attack = function(attacker, targetUnitList, callbac
     this.executeBattle(turnQueue, 0, battleField, koResult, "", [], function(text, imageName) {
         callback(null, text, imageName, koResult);
     });
-}
-
-TrainingController.prototype.executeBattle = function(turnQueue, iter, battleField, koResult, resultText, imageList, callback) {
-    if (iter >= turnQueue.length) {
-        var userId = turnQueue[0].attacker.playerId;
-        if (imageList && imageList.length > 0) {
-            image = new Jimp(950, 590 * imageList.length, 0xFFFFFF00, function (err, image) {
-                for(var i=0;i<imageList.length;i++) {
-                    image.composite(imageList[i], 0, 590 * i);
-                }
-                var imageName = "images/battle/" + userId + ".png";
-                image.write(imageName, function() {
-                    callback(resultText, imageName);
-                });
-            });    
-        } else {
-            callback(resultText, null);
-        }
-        return;
-    }
-    var turn = turnQueue[iter];
-    var that = this;
-    if (turn && turn.attacker && !turn.attacker.isFainted()) {
-        this.attackRecursively(turn.skill, turn.attacker, turn.targetUnitList, battleField, 0, turn.result, koResult, function() {
-            for(var i=0;i<turn.result.length;i++) {
-                resultText += "=======" + turn.side + "'S PHASE " + (i+1) + "=======\n";
-                resultText += turn.result[i].text + "\n";
-            }
-            for(var i=0;i<turn.result.length;i++) {
-                if (turn.result[i].image) imageList.push(turn.result[i].image);
-            }
-            turn.result = [];
-            if (turn.attacker.status["Darkness"]) turn.attacker.status["Darkness"].evoke();
-            if (turn.attacker.status["Focus"]) turn.attacker.status["Focus"].destroy();
-
-            that.executeBattle(turnQueue, iter+1, battleField, koResult, resultText, imageList, callback);
-        });    
-    } else {
-        that.executeBattle(turnQueue, iter+1, battleField, koResult, resultText, imageList, callback);
-    }
 }
 
 TrainingController.prototype.heal = function(attacker, targetUnitList, callback) {

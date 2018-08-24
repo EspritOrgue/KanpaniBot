@@ -21,6 +21,9 @@ EmployeeDatabase.prototype.getEmployeeByCommonName = function(commonName) {
         if (this.contains(this.employeeList[i].commonNames, commonName)) {
             return this.employeeList[i];
         }
+        if (this.contains([this.employeeList[i]._no], commonName)) {
+            return this.employeeList[i];
+        }
     }
     return null;
 }
@@ -93,6 +96,10 @@ EmployeeDatabase.prototype.getSuggestionsByName = function(commonName) {
         nameList.push({
             name: this.employeeList[i].commonNames[0],
             score: getMinimumEditDistance(commonName, this.employeeList[i].japaneseName)
+        });
+        nameList.push({
+            name: this.employeeList[i].commonNames[0],
+            score: getMinimumEditDistance(commonName, this.employeeList[i]._no)
         });
     }
     nameList.sort(function(a,b) {

@@ -1,7 +1,8 @@
 module.exports = {
+    names: ['shop'],
     handle: function(message, bot) {
         var command = bot.functionHelper.parseCommand(message);
-        if (command.commandName != "~shop") return;
+        if (!command.isCommand(this.names)) return;
 
         if (!bot.isPM(message)) {
             message.reply("You can use this command in Private Message only.");
@@ -17,6 +18,6 @@ module.exports = {
             text += "\n";
         }
 
-        message.channel.sendMessage(text);
+        message.channel.send(text);
     }
 }

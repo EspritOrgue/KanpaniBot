@@ -1,12 +1,16 @@
 module.exports = {
+    names: ['report', 'rp'],
+    usage: '`~report @username`',
+    description: 'report other members for misbehavior',
     handle: function(message, bot) {
-        var command = message.content.trim().toLowerCase();
-        if (!command.startsWith("~report ")) return;
+        var command = bot.functionHelper.parseCommand(message);
+        if (!command.isCommand(this.names)) return;
+
         if (bot.isPM(message)) {
             message.reply("You cannot use this command in Private Message.");
             return;
         }
-        var reportedUser = message.mentions.users.first();
+        var reportedUser = command.mentions.users.first();
         if (!reportedUser) return;
 
         if (reportedUser.id === message.author.id) {
@@ -22,20 +26,20 @@ module.exports = {
         for(key in bot.report[reportedUser.id]) {
             var reporterId = key;
             var employee = bot.playerManager.getPlayerUnit(reporterId);
-            if (employee && employee.levelCached >= 50) {
+            if (employee && (employee.promotion > 0 || employee.levelCached >= 70)) {
                 text += "**" + bot.report[reportedUser.id][reporterId] + "** ";
             } else {
                 text += bot.report[reportedUser.id][reporterId] + " ";
             }
         }
-        message.channel.sendMessage(text);
+        message.channel.send(text);
 
         if (Object.keys(bot.report[reportedUser.id]).length >= 5) {
             var count = 0;
             for(key in bot.report[reportedUser.id]) {
                 var reporterId = key;
                 var employee = bot.playerManager.getPlayerUnit(reporterId);
-                if (employee && employee.levelCached >= 50) count++;
+                if (employee && (employee.promotion > 0 || employee.levelCached >= 70)) count++;
             }
             if (count >= 2) {
                 message.guild.fetchMember(reportedUser).then(guildMember => {
@@ -46,13 +50,13 @@ module.exports = {
                         guildMember.addRole(reportedRole).then(output => {
                             bot.silenced[reportedUser.id] = true;
                             bot.saveSilenced();
-                            message.channel.sendMessage(guildMember.user + " is now silenced.");
+                            message.channel.send(guildMember.user + " is now silenced.");
                         }).catch(err => {
-                            bot.log("[Report] Adding Reported role failed.");
+                            bot.log("[Report]" + err);
                         });
                     }
                 }).catch(err => {
-                    bot.log("[Report] Fetching member failed.\n" + err);
+                    bot.log("[Report]" + err);
                 });
             }
         }

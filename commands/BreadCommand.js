@@ -1,7 +1,12 @@
 module.exports = {
+    names: ['bread'],
+    usage: '`~bread',
+    description: 'show your bread in bot system', 
     handle: function(message, bot) {
-        var text = message.content.trim().toLowerCase();
-        if (text !== "~bread") return;
-        message.reply(bot.createRemainingBreadLine(message));
+        var command = bot.functionHelper.parseCommand(message);
+        if (!command.isCommand(this.names)) return;
+
+        var text = bot.createRemainingBreadLine(message) + '\n';
+        message.reply(text);
     }
 }

@@ -1,8 +1,9 @@
 module.exports = {
+    names: ['heal'],
     handle: function(message, bot) {
         var command = bot.functionHelper.parseCommand(message);
-        if (command.commandName != "~heal") return;
-        
+        if (!command.isCommand(this.names)) return;
+
         if (message.channel.name != "battlefield") {
             message.reply("You can only use this command in Battlefield.");
             return;
@@ -12,7 +13,7 @@ module.exports = {
         var playerUnit = bot.playerManager.getPlayerUnit(userId);
         
         if (!playerUnit) {
-            message.author.sendMessage("You need to select character first.");
+            message.author.send("You need to select character first.");
             return;
         }
 
@@ -26,13 +27,13 @@ module.exports = {
             } else {
                 text += " You cannot heal now."
             }
-            message.author.sendMessage(text); 
+            message.author.send(text); 
             return;
         }
 
         var targetList = command.mentionIds;
         if (targetList.length === 0) {
-            message.author.sendMessage("You need to specify your target.");
+            message.author.send("You need to specify your target.");
             return;
         }
 
@@ -40,18 +41,18 @@ module.exports = {
         for (var i = 0; i < targetList.length; i++) {
             var targetUnit = bot.playerManager.getPlayerUnit(targetList[i]);
             if (!targetUnit) {
-                message.author.sendMessage("One of your targets does not have character.");
+                message.author.send("One of your targets does not have character.");
                 return;
             }
             if (targetUnit && targetUnit.isTrainer) {
-                message.author.sendMessage("You cannot heal a trainer.");
+                message.author.send("You cannot heal a trainer.");
                 return;
             }
             targetUnitList.push(targetUnit);
         };
 
         if (!bot.battleController) {
-            message.author.sendMessage("You cannot do battle now.");
+            message.author.send("You cannot do battle now.");
             return;
         }
 
@@ -69,9 +70,9 @@ module.exports = {
                 message.channel.sendFile(imageFileName, "png", text);
             } else {
                 if (shouldMention) {
-                    message.author.sendMessage(text);
+                    message.author.send(text);
                 } else {
-                    message.channel.sendMessage(text);
+                    message.channel.send(text);
                 }
             }
         });
