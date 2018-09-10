@@ -1,4 +1,4 @@
-var Employee = require('../classes/Employee');
+var Employee = require('../classes/KanpaniToolsEmployee');
 var Jimp = require('jimp');
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
         var isChara2 = (command.name == 'chara2');
 
         var costume = -1;
-        
+
         var name = command.args.join(' ');
         if (name === '') return;
         if (name.length > 100) {
@@ -20,19 +20,25 @@ module.exports = {
             return;
         }
 
-        var employee = bot.employeeDatabase.getEmployeeByCommonName(name);
+        // var employee = bot.employeeDatabase.getEmployeeByCommonName(name);
+        var employee = bot.ktHelper.getEmployee(name);
         if (employee == null) {
             var classId = bot.functionHelper.getClassId(name)
             var suggestions = [];
             if (classId) {
-                suggestions = bot.employeeDatabase.getSuggestionsByClass(classId);
+                suggestions = bot.ktHelper.getSuggestionsByClass();//bot.employeeDatabase.getSuggestionsByClass(classId);
             } else {
-                suggestions = bot.employeeDatabase.getSuggestionsByName(name);
+                suggestions = bot.ktHelper.getSuggestionsByName();//bot.employeeDatabase.getSuggestionsByName(name);
             }
-            text = 'Do you mean: ';
-            for(var i=0;i<suggestions.length;i++) {
-                text += '**' + suggestions[i] + '**' + (i<suggestions.length-1 ? (i<suggestions.length-2?', ':' or ') : '?');
+            if(suggestions != null){
+              text = 'Do you mean: ';
+              for(var i=0;i<suggestions.length;i++) {
+                  text += '**' + suggestions[i] + '**' + (i<suggestions.length-1 ? (i<suggestions.length-2?', ':' or ') : '?');
+              }
+            }else{
+              text = 'There was no match for your result or an error occured while trying to connect to Kanpani Tools';
             }
+
             message.reply(text);
 
         } else {
@@ -103,8 +109,8 @@ module.exports = {
                     var imageName = 'images/chara/' + employee.characterId + '.png';
                     var image = new Jimp(480, 290, function (err, image) {
 
-                        image.composite(bustupImage, 
-                            -Math.floor((bustupImage.bitmap.width - image.bitmap.width)/2), 
+                        image.composite(bustupImage,
+                            -Math.floor((bustupImage.bitmap.width - image.bitmap.width)/2),
                             -Math.floor((bustupImage.bitmap.height - image.bitmap.height)/2) - 20
                         );
                         if (!isChara2) {
@@ -117,7 +123,7 @@ module.exports = {
                             if (channel.type === 'text' || channel.type === 'dm') {
                                 var emojiName = 'k' + employee.getClass().toLowerCase();
                                 const classEmoji = (message.guild == null ? null : message.guild.emojis.find('name', emojiName));
-                                
+
                                 var text = '\n';
                                 text += 'Employee **No.' + employee._no + '**\n';
                                 text += 'Name: **' + employee.fullName + ' (' + employee.japaneseName + ')**\n';
@@ -131,11 +137,11 @@ module.exports = {
                                     player.gold -= goldToDeduct;
                                     bot.savePlayer();
                                 }
-                            }    
+                            }
                         });
                     });
                 });
             });
-        }        
+        }
     }
 }
