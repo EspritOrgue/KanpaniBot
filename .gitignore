@@ -23,9 +23,11 @@ trainingSession.json
 bread.json
 ingameBread.json
 dailygift.json
+player.json
 silenced.json
 soul.json
 runQuestStatus.json
 unsubscribe.json
 christmasTree.json
 kettle.json
+node_modules/
