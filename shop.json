@@ -1,6 +1,6 @@
 {
     "Promotion Badge": {
-        "amount": 1,
+        "amount": 3,
         "maxAmount": 3,
         "price": {
             "amount": 100000000,
@@ -8,7 +8,7 @@
         }
     },
     "Weapon Hammer": {
-        "amount": 492,
+        "amount": 500,
         "maxAmount": 500,
         "price": {
             "amount": 2000000,
@@ -16,7 +16,7 @@
         }
     },
     "Armor Hammer": {
-        "amount": 499,
+        "amount": 500,
         "maxAmount": 500,
         "price": {
             "amount": 2000000,
@@ -32,7 +32,7 @@
         }
     },
     "Gold Mailbox": {
-        "amount": 99,
+        "amount": 100,
         "maxAmount": 100,
         "price": {
             "amount": 10000000,
@@ -48,7 +48,7 @@
         }
     },
     "Food Pack": {
-        "amount": 86,
+        "amount": 100,
         "maxAmount": 100,
         "price": {
             "amount": 5000000,
