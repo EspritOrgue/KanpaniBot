@@ -5,13 +5,14 @@ module.exports = {
     handle: function(message, bot) {
         var command = bot.functionHelper.parseCommand(message);
         if (!command.isCommand(this.names)) return;
-        
+
         var now = new Date();
 
         text = '';
         var shownCount = 0;
 
         for(var i=0;i<bot.schedule.length;i++) {
+            console.log("Schedule  "+i);
             var startTime = new Date(bot.schedule[i].start_time);
             var endTime = new Date(bot.schedule[i].end_time);
             if (now.valueOf() < endTime.valueOf()) {

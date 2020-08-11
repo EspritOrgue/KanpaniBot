@@ -32,7 +32,7 @@
         }
     },
     "Gold Mailbox": {
-        "amount": 100,
+        "amount": 99,
         "maxAmount": 100,
         "price": {
             "amount": 10000000,
@@ -48,7 +48,7 @@
         }
     },
     "Food Pack": {
-        "amount": 98,
+        "amount": 86,
         "maxAmount": 100,
         "price": {
             "amount": 5000000,

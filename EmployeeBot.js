@@ -92,7 +92,7 @@ function EmployeeBot() {
     this.dmmChannelName = "dmm_games";
     this.mainChannelName = "kanpani_girls";
     this.bot = new Discord.Client();
-    
+
     this.employeeDatabase = employeeDatabase;
     this.questDatabase = questDatabase;
     this.itemInfoDatabase = itemInfoDatabase;
@@ -118,10 +118,16 @@ function EmployeeBot() {
 
     this.battleController = null;
 
-    this.schedule = [];
+    this.schedule = [
+      {
+        title: "Kanpani☆Girls Maintenance",
+        start_time: "Sep 21 2018 11:00:00 GMT+0900",
+        end_time: "Sep 21 2018 15:00:00 GMT+0900"
+      }
+    ];
     this.daily = {
         name: "Kanpani☆Girls Daily Draw Reset",
-        time: "Mar 18 2017 4:00:00 GMT+0900", 
+        time: "Mar 18 2017 4:00:00 GMT+0900",
     };
     this.dailyRemind = "Mar 18 2017 3:45:00 GMT+0900";
     this.greetings = [];
@@ -147,7 +153,7 @@ function EmployeeBot() {
         "You are welcomed :heart:",
         "No problem",
     ];
-    
+
     this.hasNewMessage = false;
     this.lastTimeSayingHi = 0;
     this.lastTimeGoodMorning = 0;
@@ -172,7 +178,7 @@ function EmployeeBot() {
     this.pendingPartnerRequest = {};
 
     this.firstTimeReady = true;
-    
+
     this.freeRoll = {};
     this.freeChara = {};
     this.rollResult = {};
@@ -199,7 +205,7 @@ function EmployeeBot() {
     this.floatingContinentChannel = null;
 
     this.disconnectTimer = null;
-   
+
     // this.kettle = {
     //     totalCacao: 0,
     //     contribution: {},
@@ -255,7 +261,7 @@ EmployeeBot.prototype.isHR = function(message) {
 }
 
 EmployeeBot.prototype.isAdmin = function(message) {
-    return (message.author.id === "162995652152786944");
+    return (message.author.id === "162995652152786944" || message.author.id === "135142639744843776");
 }
 
 EmployeeBot.prototype.initBreadIfNeed = function(userId) {
@@ -267,7 +273,7 @@ EmployeeBot.prototype.createRemainingBreadLine = function(message) {
     if (this.isPM(message)) {
         return "Remaining Bread: " + this.breadManager.getBread(userId);
     } else {
-        return "Remaining Bread: " + this.getEmoji('kbread') + " x" + this.breadManager.getBread(userId);    
+        return "Remaining Bread: " + this.getEmoji('kbread') + " x" + this.breadManager.getBread(userId);
     }
 }
 
@@ -323,12 +329,12 @@ const COMMAND_LIST = [
     scheduleCommand,
     basicGreetingCommand,
     specialCommand,
-    
+
     breadCommand,
     setBreadCommand,
     ingameBreadCommand,
     charaCommand,
-    
+
     rollCommand,
     takeCommand,
     meCommand,
@@ -340,9 +346,9 @@ const COMMAND_LIST = [
     equipCommand,
     topCommand,
     myTopCommand,
-    
+
     adminCommand,
-    
+
     inventoryCommand,
     craftCommand,
     sellCommand,
@@ -352,15 +358,15 @@ const COMMAND_LIST = [
     setDailyGiftCommand,
     dailyGiftCommand,
     unsubscribeCommand,
-    
+
     toFrontCommand,
     toBackCommand,
     swapCommand,
-    
+
     weaponCommand,
     armorCommand,
     accessoryCommand,
-    
+
     setAuctionCommand,
     auctionCommand,
     bidCommand,
@@ -377,7 +383,7 @@ const COMMAND_LIST = [
     shopCommand,
     buyCommand,
     promoteCommand,
-    
+
     setCEOCommand,
     removeCEOCommand,
     setServerCommand,
@@ -393,7 +399,7 @@ EmployeeBot.prototype.commands = function() {
 
 EmployeeBot.prototype.handleCommonCommand = function(message) {
     if (message.author.bot) return;
-    
+
     try {
         for (var i=0;i<COMMAND_LIST.length;i++) {
             COMMAND_LIST[i].handle(message, this);
@@ -407,7 +413,7 @@ EmployeeBot.prototype.handleCommonCommand = function(message) {
 EmployeeBot.prototype.getRandomMessages = function(messageList) {
     var length = messageList.length;
     if (length > 0) {
-        return messageList[Math.floor(Math.random() * length)];    
+        return messageList[Math.floor(Math.random() * length)];
     }
     return "";
 }
@@ -416,7 +422,7 @@ EmployeeBot.prototype.sayRandomMessages = function(channel, messageList) {
     var length = messageList.length;
     if (length > 0) {
         var message = this.getRandomMessages(messageList);
-        channel.send(message);    
+        channel.send(message);
     }
 }
 
@@ -425,7 +431,7 @@ EmployeeBot.prototype.greeting = function(channel) {
 }
 
 EmployeeBot.prototype.setDailyDrawReminder = function() {
-    var time = this.functionHelper.getTimeUntilDaily(this.dailyRemind); 
+    var time = this.functionHelper.getTimeUntilDaily(this.dailyRemind);
     var self = this;
     self.bot.setTimeout(function() {
         self.sendMessageToMainChannel(self.getRole('CEO') + "\n**Reminder: 15 minutes until Daily Draw Reset**");
@@ -447,7 +453,7 @@ EmployeeBot.prototype.setAlarmForSchedule = function() {
     for(var i=0;i<this.schedule.length;i++) {
         var name = this.schedule[i].title;
         var startTime = new Date(this.schedule[i].start_time);
-        
+
         startTime.setTime(startTime.getTime() - 15*60*1000);
         if (now.valueOf() < startTime.valueOf()) {
             this.setAlarm('**' + name + '** will start in 15 minutes', startTime.valueOf() - now.valueOf());
@@ -464,7 +470,7 @@ EmployeeBot.prototype.saveSoul = function() {
             self.log('[saveSoul]: ' + err);
             return;
         }
-    }); 
+    });
 }
 
 EmployeeBot.prototype.loadSoul = function() {
@@ -488,7 +494,7 @@ EmployeeBot.prototype.saveSilenced = function() {
             return;
         }
         self.log("Saved Silenced");
-    }); 
+    });
 }
 
 EmployeeBot.prototype.loadSilenced = function() {
@@ -511,7 +517,7 @@ EmployeeBot.prototype.saveUnsubscribe = function() {
             self.log('[saveUnsubscribe]: ' + err);
             return;
         }
-    }); 
+    });
 }
 
 EmployeeBot.prototype.loadUnsubscribe = function() {
@@ -526,7 +532,7 @@ EmployeeBot.prototype.loadUnsubscribe = function() {
         }
         catch (err) {
             self.log('[loadUnsubscribe]: ' + err);
-            self.unsubscribe = {};   
+            self.unsubscribe = {};
         }
     });
 }
@@ -550,9 +556,9 @@ EmployeeBot.prototype.saveDailyGift = function() {
     this.fs.writeFile(dailyGiftFileName, textToWrite, function(err) {
         if(err) {
             self.log('[saveDailyGift]: ' + err);
-            return;  
-        } 
-    }); 
+            return;
+        }
+    });
 }
 
 EmployeeBot.prototype.loadDailyGift = function() {
@@ -578,9 +584,9 @@ EmployeeBot.prototype.saveShop = function() {
     this.fs.writeFile(shopFileName, textToWrite, function(err) {
         if(err) {
             self.log('[saveShop]: ' + err);
-            return;  
-        } 
-    }); 
+            return;
+        }
+    });
 }
 
 EmployeeBot.prototype.loadShop = function() {
@@ -608,8 +614,8 @@ EmployeeBot.prototype.saveKettle = function() {
     this.fs.writeFile(kettleFileName, textToWrite, function(err) {
         if(err) {
             self.log('[saveKettle]: ' + err);
-            return;  
-        } 
+            return;
+        }
     });
 }
 
@@ -688,9 +694,9 @@ EmployeeBot.prototype.saveRunQuestStatus = function() {
     this.fs.writeFile(runQuestStatusFileName, textToWrite, function(err) {
         if(err) {
             self.log('[saveRunQuestStatus]: ' + err);
-            return;  
-        } 
-    }); 
+            return;
+        }
+    });
 }
 
 EmployeeBot.prototype.loadRunQuestStatus = function() {
@@ -741,9 +747,9 @@ EmployeeBot.prototype.saveAuction = function() {
     this.fs.writeFile(auctionFileName, textToWrite, function(err) {
         if(err) {
             self.log('[saveAuction]: ' + err);
-            return;  
-        } 
-    }); 
+            return;
+        }
+    });
 }
 
 EmployeeBot.prototype.loadAuction = function() {
@@ -876,25 +882,25 @@ EmployeeBot.prototype.ready = function() {
                 this.floatingContinentChannel = channels[i];
             }
         }
-        console.log("mainChannel is " + (this.mainChannel?"on":"off"));    
-        console.log("logChannel is " + (this.logChannel?"on":"off"));    
+        console.log("mainChannel is " + (this.mainChannel?"on":"off"));
+        console.log("logChannel is " + (this.logChannel?"on":"off"));
         //console.log("battleChannel is " + (this.battleChannel?"on":"off"));
         console.log("marketChannel is " + (this.marketChannel?"on":"off"));
         console.log("joinLeaveChannel is " + (this.joinLeaveChannel?"on":"off"));
         console.log("floatingContinentChannel is " + (this.floatingContinentChannel?"on":"off"));
-        
+
         var text = "Bot is on. Serving on " + channels.length + " channels\n-----";
         this.log(text);
         console.log(text);
 
         var self = this;
-
-        this.retrieveSchedule(function() {
-            self.setAlarmForSchedule();
-        })
+        self.setAlarmForSchedule();
+        // this.retrieveSchedule(function() {
+        //     self.setAlarmForSchedule();
+        // })
         this.setDailyDrawReminder();
         this.breadManager.setBreadRegeneration();
-        this.newsManager.startTimer();
+        //this.newsManager.startTimer();
 
         this.firstTimeReady = false;
         this.loadSoul();
@@ -924,12 +930,12 @@ EmployeeBot.prototype.ready = function() {
 
 EmployeeBot.prototype.getEmoji = function(emojiName) {
     if (!this.mainChannel) return null;
-    return this.mainChannel.guild.emojis.find('name', emojiName);    
+    return this.mainChannel.guild.emojis.find('name', emojiName);
 }
 
 EmployeeBot.prototype.getRole = function(roleName) {
     if (!this.mainChannel) return null;
-    return this.mainChannel.guild.roles.find('name', roleName);    
+    return this.mainChannel.guild.roles.find('name', roleName);
 }
 
 EmployeeBot.prototype.sendMessageToMainChannel = function(text, options) {
@@ -981,7 +987,7 @@ EmployeeBot.prototype.login = function() {
 var employee = new EmployeeBot();
 
 employee.bot.on('guildMemberAdd', (member) => {
-    
+
     if (employee.joinLeaveChannel) {
         var text = "**" + member.user.username + "** has joined.\n";
         text += "Member count: " + member.guild.memberCount;
@@ -989,8 +995,8 @@ employee.bot.on('guildMemberAdd', (member) => {
     }
 
     member.send(
-        'Welcome ' + member.user.username + '-san~!\n\n' 
-        + 'Message me with a `~roll` and try to find your dream waifu. ' 
+        'Welcome ' + member.user.username + '-san~!\n\n'
+        + 'Message me with a `~roll` and try to find your dream waifu. '
         + 'You can ask more about them and be more involved in `#kanpani_girls`, talk about other dmm games on `#dmm_games` or talk everything random in `#offtopic_general`.\n\n'
         + 'Chats are SFW!\n\n'
         + 'Regards,\n' + employee.name);
@@ -999,7 +1005,7 @@ employee.bot.on('guildMemberAdd', (member) => {
 });
 
 employee.bot.on('guildMemberRemove', (member) => {
-    
+
     if (employee.joinLeaveChannel) {
         var text = "**" + member.user.username + "** has left.\n";
         text += "Member count: " + member.guild.memberCount;
