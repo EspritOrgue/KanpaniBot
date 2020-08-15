@@ -24,7 +24,7 @@ var employees = [
         maxStats1: { _str: 520, _vit: 461, _agi: 368, _dex: 379, _int: 333, _pie: 268, _luk: 228},
         maxStats2: { _str: 746, _vit: 646, _agi: 523, _dex: 558, _int: 486, _pie: 385, _luk: 333},
     },{
-        _no: "220", _id: "10150005_1fb4808a", fullName: "Nomadoa Nihil", japaneseName: "ノマドア・ニヒル", commonNames: ["Nomada", "Nomadoa"], height: 0, cwId: 27,
+        _no: "220", _id: "10150005_1fb4808a", fullName: "Nomadoa Nihil", japaneseName: "ノマドア・ニヒル", commonNames: ["Nomada", "Nomadoa","Nom"], height: 0, cwId: 27,
         baseStats: { _str: 34, _vit: 31, _agi: 15, _dex: 12, _int: 6, _pie: 10, _luk: 5},
         maxStats0: { _str: 395, _vit: 337, _agi: 268, _dex: 288, _int: 255, _pie: 185, _luk: 164},
         maxStats1: { _str: 520, _vit: 461, _agi: 368, _dex: 379, _int: 333, _pie: 268, _luk: 228},

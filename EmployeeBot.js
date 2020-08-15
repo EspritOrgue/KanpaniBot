@@ -433,6 +433,8 @@ EmployeeBot.prototype.greeting = function(channel) {
 EmployeeBot.prototype.setDailyDrawReminder = function() {
     var time = this.functionHelper.getTimeUntilDaily(this.dailyRemind);
     var self = this;
+    Object.keys(self.freeRoll).forEach((key,index)=>{self.freeRoll[key]=4})
+    Object.keys(self.freeChara).forEach((key,index)=>{self.freeChara[key]=2})
     self.bot.setTimeout(function() {
         self.sendMessageToMainChannel(self.getRole('CEO') + "\n**Reminder: 15 minutes until Daily Draw Reset**");
         self.bot.setTimeout(function(){
