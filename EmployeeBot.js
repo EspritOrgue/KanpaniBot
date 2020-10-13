@@ -995,14 +995,16 @@ employee.bot.on('guildMemberAdd', (member) => {
         text += "Member count: " + member.guild.memberCount;
         employee.joinLeaveChannel.send(text);
     }
-
-    member.send(
+    try{
+    	member.send(
         'Welcome ' + member.user.username + '-san~!\n\n'
         + 'Message me with a `~roll` and try to find your dream waifu. '
         + 'You can ask more about them and be more involved in `#kanpani_girls`, talk about other dmm games on `#dmm_games` or talk everything random in `#offtopic_general`.\n\n'
         + 'Chats are SFW!\n\n'
         + 'Regards,\n' + employee.name);
-
+    }catch(error){
+        employee.log("Couldn't send a DM to the user "+member.user.username)
+    }
     employee.userManager.fetchAllMembers();
 });
 
